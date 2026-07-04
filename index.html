@@ -1,0 +1,2590 @@
+﻿<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Мандах Нярайн Сувилал</title>
+  <meta name="description" content="Мандах Нярайн Сувилал нь эх, нярайд зориулсан төрсний дараах сувилал, нярайн асаргаа, эхийн нөхөн сэргэлт, хөхүүл зөвлөгөө үзүүлнэ." />
+  <style>
+    :root {
+      --ink: #22312f;
+      --muted: #66736f;
+      --paper: #fffdf9;
+      --soft: #f5f0e8;
+      --mint: #d9eee6;
+      --teal: #1f6f67;
+      --rose: #d98f85;
+      --gold: #c09a55;
+      --line: rgba(34, 49, 47, 0.12);
+      --shadow: 0 22px 55px rgba(34, 49, 47, 0.14);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+
+
+    body[data-theme="night"] {
+      --ink: #edf6f2;
+      --muted: #b7c8c2;
+      --paper: #101918;
+      --soft: #172422;
+      --mint: #213d36;
+      --teal: #7bd1c4;
+      --rose: #eea49b;
+      --gold: #e0bf73;
+      --line: rgba(237, 246, 242, 0.16);
+      --shadow: 0 24px 62px rgba(0, 0, 0, 0.36);
+    }
+
+    body[data-theme="night"] .site-header.is-scrolled,
+    body[data-theme="night"] .site-header.is-open {
+      background: rgba(16, 25, 24, 0.96);
+      color: var(--ink);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+    }
+
+    body[data-theme="night"] .quick-info,
+    body[data-theme="night"] .service-card,
+    body[data-theme="night"] .package-grid article,
+    body[data-theme="night"] .room-list article,
+    body[data-theme="night"] .team-grid article,
+    body[data-theme="night"] .room-card.featured,
+    body[data-theme="night"] .booking-form,
+    body[data-theme="night"] .modal-window,
+    body[data-theme="night"] .modal-close {
+      background: #172422;
+      color: var(--ink);
+    }
+
+    body[data-theme="night"] .booking-form input,
+    body[data-theme="night"] .booking-form select,
+    body[data-theme="night"] .booking-form textarea {
+      background: #101918;
+      color: var(--ink);
+    }
+
+    body[data-theme="night"] .booking-form input::placeholder,
+    body[data-theme="night"] .booking-form textarea::placeholder {
+      color: rgba(237, 246, 242, 0.5);
+    }
+
+    body[data-theme="night"] .site-nav {
+      color: inherit;
+    }
+
+    body[data-theme="night"] .site-header.is-scrolled .language-select,
+    body[data-theme="night"] .site-header.is-open .language-select,
+    body[data-theme="night"] .site-header.is-scrolled .theme-toggle,
+    body[data-theme="night"] .site-header.is-open .theme-toggle {
+      border-color: var(--line);
+      background: #172422;
+      color: var(--ink);
+    }
+
+    body[data-theme="night"] .button-primary,
+    body[data-theme="night"] .package-grid .highlight,
+    body[data-theme="night"] .timeline time {
+      background: #56b9ad;
+      color: #071412;
+    }
+
+    body[data-theme="night"] .package-grid .highlight p {
+      color: rgba(7, 20, 18, 0.78);
+    }
+
+    body[data-theme="night"] .modal-backdrop {
+      background: rgba(4, 10, 10, 0.72);
+    }
+
+    body[data-theme="night"] .admin-toolbar {
+      background: rgba(16, 25, 24, 0.96);
+      color: var(--ink);
+    }
+
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px clamp(18px, 4vw, 64px);
+      color: #fff;
+      transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .site-header.is-scrolled, .site-header.is-open {
+      background: rgba(255, 253, 249, 0.96);
+      color: var(--ink);
+      box-shadow: 0 14px 40px rgba(34, 49, 47, 0.1);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand { display: inline-flex; align-items: center; gap: 12px; min-width: 172px; }
+    .brand-mark {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(34, 49, 47, 0.16);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+    .brand-mark img { width: 100%; height: 100%; object-fit: cover; }
+    .site-header.is-scrolled .brand-mark, .site-header.is-open .brand-mark { border-color: var(--line); }
+    .brand strong, .brand small { display: block; line-height: 1.1; }
+    .brand small { margin-top: 2px; opacity: 0.78; }
+
+    .site-nav { display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); font-size: 15px; font-weight: 650; }
+    .site-nav a { position: relative; padding: 8px 0; }
+    .site-nav a::after {
+      position: absolute;
+      right: 0;
+      bottom: 4px;
+      left: 0;
+      height: 2px;
+      content: "";
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 180ms ease;
+    }
+    .site-nav a:hover::after { transform: scaleX(1); }
+
+    .nav-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      background: transparent;
+      color: inherit;
+    }
+    .nav-toggle span { display: block; width: 18px; height: 2px; margin: 4px auto; background: currentColor; }
+
+
+    .hero-arrow {
+      position: absolute;
+      top: 50%;
+      z-index: 3;
+      display: grid;
+      width: 54px;
+      height: 54px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.68);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      font-size: 42px;
+      line-height: 1;
+      cursor: pointer;
+      transform: translateY(-50%);
+      backdrop-filter: blur(10px);
+      transition: background 160ms ease, transform 160ms ease;
+    }
+
+    .hero-arrow:hover {
+      background: rgba(255, 255, 255, 0.24);
+      transform: translateY(-50%) scale(1.04);
+    }
+
+    .hero-arrow-left {
+      left: clamp(14px, 3vw, 42px);
+    }
+
+    .hero-arrow-right {
+      right: clamp(14px, 3vw, 42px);
+    }
+
+    @media (max-width: 620px) {
+      .hero-arrow {
+        top: auto;
+        bottom: 18px;
+        width: 44px;
+        height: 44px;
+        font-size: 34px;
+      }
+
+      .hero-arrow-left {
+        left: 18px;
+      }
+
+      .hero-arrow-right {
+        right: 18px;
+      }
+    }
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: end;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(18, 42, 38, 0.84), rgba(18, 42, 38, 0.52) 46%, rgba(18, 42, 38, 0.18)),
+        url("https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=1800&q=82") center/cover;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero::before {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      content: "";
+      background: linear-gradient(90deg, rgba(18, 42, 38, 0.84), rgba(18, 42, 38, 0.52) 46%, rgba(18, 42, 38, 0.18));
+      pointer-events: none;
+    }
+
+    .hero::after {
+      position: absolute;
+      inset: auto 0 0;
+      z-index: 1;
+      height: 45%;
+      content: "";
+      background: linear-gradient(0deg, rgba(18, 42, 38, 0.58), transparent);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: min(720px, calc(100% - 36px));
+      margin: 0 0 clamp(70px, 12vh, 128px) clamp(18px, 7vw, 96px);
+      color: #fff;
+    }
+
+    .eyebrow, .section-kicker {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 { max-width: 820px; margin: 0; font-size: clamp(42px, 7vw, 82px); line-height: 0.98; letter-spacing: 0; }
+    .hero-copy { max-width: 600px; margin: 24px 0 0; color: rgba(255,255,255,0.9); font-size: clamp(17px, 2vw, 21px); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+    .button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 12px 22px;
+      font-weight: 750;
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { background: var(--teal); color: #fff; box-shadow: 0 14px 28px rgba(31, 111, 103, 0.25); }
+    .button-light { border-color: rgba(255,255,255,0.72); background: rgba(255,255,255,0.12); color: #fff; backdrop-filter: blur(10px); }
+
+    .quick-info {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      width: min(1120px, calc(100% - 36px));
+      margin: -58px auto 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,253,249,0.96);
+      box-shadow: var(--shadow);
+    }
+    .quick-info article { min-height: 116px; padding: 24px; border-right: 1px solid var(--line); }
+    .quick-info article:last-child { border-right: 0; }
+    .quick-info span { color: var(--teal); font-size: 34px; font-weight: 850; line-height: 1; }
+    .quick-info p { margin: 10px 0 0; color: var(--muted); font-weight: 650; }
+
+    .section { width: min(1120px, calc(100% - 36px)); margin: 0 auto; padding: clamp(72px, 10vw, 116px) 0 0; }
+    .intro { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(28px, 6vw, 84px); align-items: end; }
+    .section h2, .contact h2 { margin: 0; font-size: clamp(30px, 4.4vw, 52px); line-height: 1.08; letter-spacing: 0; }
+    .intro > p, .contact-info > p { margin: 0; color: var(--muted); font-size: 18px; }
+    .section-heading { max-width: 720px; margin-bottom: 34px; }
+
+    .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .service-card, .package-grid article, .room-list article, .team-grid article { border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+    .service-card { min-height: 268px; padding: 26px; }
+    .icon {
+      display: grid;
+      width: 46px;
+      height: 46px;
+      margin-bottom: 24px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--mint);
+      color: var(--teal);
+      font-size: 24px;
+      font-weight: 850;
+    }
+    .service-card h3, .room-card h3, .room-list h3, .timeline h3, .team-grid h3, .package-grid h3 { margin: 0; font-size: 21px; line-height: 1.2; }
+    .service-card p, .room-card p, .room-list p, .timeline p, .team-grid p, .package-grid p { margin: 12px 0 0; color: var(--muted); }
+
+    .rooms {
+      width: 100%;
+      max-width: none;
+      padding-inline: clamp(18px, 5vw, 72px);
+      padding-bottom: clamp(72px, 10vw, 110px);
+      background: linear-gradient(180deg, transparent 0 16%, var(--soft) 16% 100%);
+    }
+    .rooms .section-heading, .room-layout { width: min(1120px, 100%); margin-inline: auto; }
+    .room-layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr); gap: 18px; }
+    .room-card.featured { overflow: hidden; border-radius: 8px; background: #fff; box-shadow: var(--shadow); }
+    .room-visual {
+      min-height: 380px;
+      background:
+        linear-gradient(135deg, rgba(31,111,103,0.78), rgba(217,143,133,0.42)),
+        url("assets/room-photo.png") center/cover;
+    }
+    .room-visual img { width: 100%; height: 100%; min-height: inherit; object-fit: cover; object-position: center; }
+    .room-card div:not(.room-visual) { padding: 26px; }
+    .room-card span { display: inline-flex; margin-top: 18px; border-radius: 999px; background: var(--mint); color: var(--teal); padding: 8px 13px; font-weight: 780; }
+    .room-list { display: grid; gap: 18px; }
+    .room-list article { padding: 24px; }
+
+    .timeline { display: grid; gap: 14px; }
+    .timeline article { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 20px; align-items: start; padding: 24px 0; border-top: 1px solid var(--line); }
+    .timeline time { display: inline-flex; width: 76px; height: 42px; align-items: center; justify-content: center; border-radius: 999px; background: var(--teal); color: #fff; font-weight: 800; }
+
+    .team { width: 100%; max-width: none; padding-inline: clamp(18px, 5vw, 72px); padding-bottom: clamp(76px, 10vw, 116px); background: var(--mint); }
+    .team .section-heading, .team-grid { width: min(1120px, 100%); margin-inline: auto; }
+    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .team-grid article { overflow: hidden; background: var(--paper); }
+    .portrait {
+      min-height: 260px;
+      background: linear-gradient(135deg, rgba(31,111,103,0.84), rgba(192,154,85,0.5));
+      display: grid;
+      place-items: center;
+      color: rgba(255,255,255,0.92);
+      font-size: 54px;
+      font-weight: 850;
+    }
+    .team-grid h3, .team-grid p { padding-inline: 22px; }
+    .team-grid h3 { margin-top: 22px; }
+    .team-grid p { margin-bottom: 24px; }
+
+    .package-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(205px, 1fr)); gap: 18px; }
+    .package-grid article {
+      display: grid;
+      min-height: 232px;
+      align-content: start;
+      padding: 28px;
+      cursor: pointer;
+      transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    }
+    .package-grid article:hover,
+    .package-grid article:focus-visible {
+      border-color: rgba(31, 111, 103, 0.42);
+      box-shadow: 0 16px 34px rgba(34, 49, 47, 0.12);
+      outline: 0;
+      transform: translateY(-3px);
+    }
+    .package-grid .highlight { border-color: rgba(31,111,103,0.45); background: var(--teal); color: #fff; box-shadow: var(--shadow); }
+    .package-grid .highlight p { color: rgba(255,255,255,0.82); }
+    .package-grid strong { display: block; margin-top: 24px; color: var(--rose); font-size: clamp(23px, 2.1vw, 28px); line-height: 1.05; }
+    .package-grid .highlight strong { color: #fff; }
+    .package-more { display: inline-flex; width: fit-content; margin-top: auto; color: var(--teal); font-weight: 800; }
+    .package-grid .highlight .package-more { color: #fff; }
+
+    .contact { display: grid; grid-template-columns: minmax(0, 760px); justify-content: center; gap: clamp(28px, 6vw, 80px); width: min(1120px, calc(100% - 36px)); margin: 0 auto; padding: clamp(76px, 10vw, 118px) 0; }
+    .contact-info ul { display: grid; gap: 12px; margin: 28px 0 0; padding: 0; list-style: none; }
+    .booking-form { display: grid; gap: 16px; border: 1px solid var(--line); border-radius: 8px; background: #fff; padding: clamp(22px, 4vw, 34px); box-shadow: var(--shadow); }
+    .booking-form label { display: grid; gap: 8px; color: var(--ink); font-weight: 720; }
+    .booking-form input, .booking-form select, .booking-form textarea { width: 100%; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); font: inherit; padding: 13px 14px; }
+    .booking-form textarea { resize: vertical; }
+    .form-note { min-height: 24px; margin: 0; color: var(--teal); font-weight: 720; }
+
+    .site-footer { display: grid; background: var(--ink); color: rgba(255,255,255,0.82); }
+    .footer-main { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 26px clamp(18px, 4vw, 64px); }
+    .site-footer p { margin: 0; }
+    .site-footer a { font-weight: 750; }
+    .creator-credit { display: flex; align-items: center; justify-content: center; gap: 14px; border-top: 1px solid rgba(255,255,255,0.12); background: var(--paper); color: var(--ink); padding: 14px 18px 16px; }
+    .creator-credit span { flex: 0 0 auto; font-size: 13px; font-weight: 800; letter-spacing: 0; }
+    .creator-logo { display: block; width: 132px; max-width: 38vw; height: auto; }
+
+    .admin-toolbar {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 60;
+      display: flex;
+      max-width: calc(100% - 32px);
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 249, 0.96);
+      color: var(--ink);
+      padding: 10px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .admin-toolbar[hidden] {
+      display: none;
+    }
+
+    .admin-toolbar strong {
+      padding: 0 6px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .admin-toolbar button,
+    .admin-toolbar a {
+      display: inline-flex;
+      min-height: 36px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--ink);
+      padding: 0 12px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    .admin-toolbar [data-admin-save] {
+      border-color: transparent;
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .admin-status {
+      min-width: 86px;
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    body.admin-editing [data-i18n],
+    body.admin-editing [data-admin-field] {
+      outline: 2px dashed rgba(31, 111, 103, 0.5);
+      outline-offset: 3px;
+      cursor: text;
+    }
+
+    body.admin-editing [contenteditable="true"]:focus {
+      outline: 3px solid rgba(217, 143, 133, 0.72);
+      background: rgba(255, 253, 249, 0.14);
+    }
+
+    @media (max-width: 920px) {
+      .site-header { align-items: flex-start; }
+      .nav-toggle { display: block; flex: 0 0 auto; }
+      .site-nav {
+        position: absolute;
+        top: 76px;
+        right: 18px;
+        left: 18px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+        color: var(--ink);
+        padding: 12px;
+        box-shadow: var(--shadow);
+      }
+      .site-header.is-open .site-nav { display: flex; }
+      .site-nav a { padding: 12px; }
+      .quick-info, .service-grid, .room-layout, .team-grid, .package-grid, .contact, .intro { grid-template-columns: 1fr; }
+      .quick-info { width: calc(100% - 28px); }
+      .quick-info article { border-right: 0; border-bottom: 1px solid var(--line); }
+      .quick-info article:last-child { border-bottom: 0; }
+    }
+
+    @media (max-width: 620px) {
+      .site-header { padding: 14px; }
+      .brand { min-width: 0; }
+      .brand-mark { width: 40px; height: 40px; }
+  
+    .hero-arrow {
+      position: absolute;
+      top: 50%;
+      z-index: 3;
+      display: grid;
+      width: 54px;
+      height: 54px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.68);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      font-size: 42px;
+      line-height: 1;
+      cursor: pointer;
+      transform: translateY(-50%);
+      backdrop-filter: blur(10px);
+      transition: background 160ms ease, transform 160ms ease;
+    }
+
+    .hero-arrow:hover {
+      background: rgba(255, 255, 255, 0.24);
+      transform: translateY(-50%) scale(1.04);
+    }
+
+    .hero-arrow-left {
+      left: clamp(14px, 3vw, 42px);
+    }
+
+    .hero-arrow-right {
+      right: clamp(14px, 3vw, 42px);
+    }
+
+    @media (max-width: 620px) {
+      .hero-arrow {
+        top: auto;
+        bottom: 18px;
+        width: 44px;
+        height: 44px;
+        font-size: 34px;
+      }
+
+      .hero-arrow-left {
+        left: 18px;
+      }
+
+      .hero-arrow-right {
+        right: 18px;
+      }
+    }
+    .hero { min-height: 88vh; }
+      .hero-content { width: calc(100% - 28px); margin: 0 auto 62px; }
+      .hero h1 { font-size: 40px; }
+      .hero-actions, .button { width: 100%; }
+      .button { padding-inline: 16px; }
+      .quick-info { margin-top: -28px; }
+      .quick-info article { min-height: auto; padding: 20px; }
+      .section { width: calc(100% - 28px); }
+      .room-visual { min-height: 240px; }
+      .timeline article { grid-template-columns: 1fr; gap: 12px; }
+      .footer-main { flex-direction: column; align-items: flex-start; }
+      .creator-credit { width: 100%; }
+    }
+  
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 0 0 auto;
+    }
+
+
+
+    .header-login {
+      min-height: 42px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: inherit;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 850;
+      padding: 0 15px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: transform 160ms ease, background 160ms ease;
+    }
+
+    .header-login:hover {
+      transform: translateY(-1px);
+    }
+
+    .site-header.is-scrolled .header-login,
+    .site-header.is-open .header-login {
+      border-color: var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    body[data-theme="night"] .site-header.is-scrolled .header-login,
+    body[data-theme="night"] .site-header.is-open .header-login {
+      border-color: var(--line);
+      background: #172422;
+      color: var(--ink);
+    }
+
+    .login-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .login-check {
+      display: inline-flex !important;
+      grid-template-columns: none !important;
+      align-items: center;
+      gap: 8px !important;
+      font-weight: 650 !important;
+    }
+
+    .login-check input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--teal);
+    }
+
+
+    .login-register-link {
+      display: inline-flex;
+      align-self: center;
+      justify-content: center;
+      border: 0;
+      background: transparent;
+      color: var(--teal);
+      font: inherit;
+      font-weight: 850;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .login-register-link:hover {
+      text-decoration: underline;
+    }
+    .login-link {
+      border: 0;
+      background: transparent;
+      color: var(--teal);
+      font: inherit;
+      font-weight: 800;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .header-register {
+      min-height: 42px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      background: var(--teal);
+      color: #fff;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 850;
+      padding: 0 15px;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(31, 111, 103, 0.18);
+      transition: transform 160ms ease, background 160ms ease;
+    }
+
+    .header-register:hover {
+      transform: translateY(-1px);
+    }
+
+    .site-header:not(.is-scrolled):not(.is-open) .header-register {
+      border-color: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+      backdrop-filter: blur(10px);
+    }
+
+
+
+
+    .header-user[hidden] {
+      display: none !important;
+    }
+
+    .header-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-user-link {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: inherit;
+      padding: 0 10px 0 5px;
+      font-weight: 850;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-avatar {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--rose));
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .header-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .header-account {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    .header-logout {
+      min-height: 42px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 850;
+      padding: 0 13px;
+      cursor: pointer;
+    }
+
+    .site-header.is-scrolled .header-user-link,
+    .site-header.is-open .header-user-link,
+    .site-header.is-scrolled .header-logout,
+    .site-header.is-open .header-logout {
+      border-color: var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    body[data-theme="night"] .site-header.is-scrolled .header-user-link,
+    body[data-theme="night"] .site-header.is-open .header-user-link,
+    body[data-theme="night"] .site-header.is-scrolled .header-logout,
+    body[data-theme="night"] .site-header.is-open .header-logout {
+      background: #172422;
+      color: var(--ink);
+    }
+    .theme-toggle {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: inherit;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 850;
+      padding: 0 12px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: transform 160ms ease, background 160ms ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+    }
+
+    .theme-toggle [data-theme-icon] {
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .site-header.is-scrolled .theme-toggle,
+    .site-header.is-open .theme-toggle {
+      border-color: var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .language-control {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .language-select {
+      min-height: 42px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: inherit;
+      font: inherit;
+      font-weight: 800;
+      padding: 0 12px;
+      cursor: pointer;
+    }
+
+    .language-select option {
+      color: var(--ink);
+    }
+
+    .site-header.is-scrolled .language-select,
+    .site-header.is-open .language-select {
+      border-color: var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 620px) {
+      .site-header {
+        gap: 12px;
+      }
+
+      .header-actions {
+        gap: 6px;
+        margin-left: auto;
+      }
+
+      .header-login,
+      .header-register {
+        min-height: 40px;
+        max-width: 78px;
+        padding: 0 9px;
+        font-size: 13px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+  
+    .header-user[hidden] {
+      display: none !important;
+    }
+
+    .header-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-user-link {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: inherit;
+      padding: 0 10px 0 5px;
+      font-weight: 850;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-avatar {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--rose));
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .header-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .header-account {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    .header-logout {
+      min-height: 42px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 850;
+      padding: 0 13px;
+      cursor: pointer;
+    }
+
+    .site-header.is-scrolled .header-user-link,
+    .site-header.is-open .header-user-link,
+    .site-header.is-scrolled .header-logout,
+    .site-header.is-open .header-logout {
+      border-color: var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    body[data-theme="night"] .site-header.is-scrolled .header-user-link,
+    body[data-theme="night"] .site-header.is-open .header-user-link,
+    body[data-theme="night"] .site-header.is-scrolled .header-logout,
+    body[data-theme="night"] .site-header.is-open .header-logout {
+      background: #172422;
+      color: var(--ink);
+    }
+    .theme-toggle {
+        min-height: 40px;
+        width: 42px;
+        gap: 0;
+        padding: 0;
+        font-size: 13px;
+      }
+
+      .theme-toggle [data-theme-label] {
+        display: none;
+      }
+
+      .language-select {
+        width: 76px;
+        min-width: 0;
+        min-height: 40px;
+        padding: 0 7px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .header-login,
+      .header-register {
+        max-width: 46px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .brand span:last-child {
+        display: none;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .site-header {
+        gap: 8px;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+      }
+
+      .header-actions {
+        gap: 4px;
+      }
+
+      .header-login,
+      .header-register {
+        min-height: 38px;
+        max-width: 58px;
+        padding: 0 7px;
+        font-size: 12px;
+      }
+
+      .theme-toggle,
+      .nav-toggle {
+        width: 38px;
+        height: 38px;
+        min-height: 38px;
+      }
+
+      .language-select {
+        width: 68px;
+        min-height: 38px;
+        font-size: 12px;
+      }
+    }
+
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(18, 42, 38, 0.62);
+      padding: 18px;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-backdrop.is-visible {
+      display: flex;
+    }
+
+    .modal-window {
+      width: min(720px, 100%);
+      max-height: min(90vh, 820px);
+      overflow: auto;
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: 0 28px 70px rgba(18, 42, 38, 0.26);
+    }
+
+    .modal-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: start;
+      border-bottom: 1px solid var(--line);
+      padding: 26px clamp(22px, 4vw, 34px) 20px;
+    }
+
+    .modal-head h2 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 40px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .modal-head p:last-child {
+      margin: 12px 0 0;
+      color: var(--muted);
+    }
+
+    .modal-close {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--ink);
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+
+    .user-menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      padding: clamp(22px, 4vw, 34px);
+    }
+
+    .user-menu-card {
+      display: grid;
+      gap: 8px;
+      min-height: 132px;
+      align-content: start;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 20px;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .user-menu-card strong {
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .user-menu-card span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .user-menu-card:hover {
+      border-color: rgba(31, 111, 103, 0.46);
+      transform: translateY(-1px);
+    }
+
+    .user-menu-account {
+      display: inline-flex;
+      margin-top: 12px;
+      border-radius: 999px;
+      background: var(--mint);
+      color: var(--teal);
+      padding: 8px 12px;
+      font-weight: 850;
+    }
+
+    body[data-theme="night"] .user-menu-card {
+      background: #172422;
+      color: var(--ink);
+    }
+
+    @media (max-width: 620px) {
+      .user-menu-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .modal-window .booking-form {
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .package-detail-body {
+      display: grid;
+      gap: 16px;
+    }
+
+    .package-detail-price {
+      color: var(--rose);
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .package-detail-body p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .package-detail-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .package-detail-list li {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      padding: 12px 14px;
+      color: var(--ink);
+      font-weight: 680;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 720px) {
+      .site-header {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 10px 12px;
+      }
+
+      .brand {
+        min-width: 0;
+        width: 100%;
+        gap: 10px;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+        flex: 0 0 auto;
+        font-size: 13px;
+      }
+
+      .brand strong {
+        font-size: 15px;
+      }
+
+      .brand small {
+        font-size: 12px;
+      }
+
+      .header-actions {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        width: 100%;
+        gap: 6px;
+        margin: 0;
+      }
+
+      .header-login,
+      .header-register,
+      .theme-toggle,
+      .language-select,
+      .nav-toggle {
+        width: 100%;
+        min-width: 0;
+        min-height: 38px;
+        padding: 0 6px;
+        font-size: 12px;
+      }
+
+      .header-login,
+      .header-register {
+        max-width: none;
+      }
+
+      .theme-toggle [data-theme-label] {
+        display: none;
+      }
+
+      .language-control {
+        min-width: 0;
+      }
+
+      .header-user {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 6px;
+        width: 100%;
+      }
+
+      .header-user-link,
+      .header-logout {
+        min-height: 38px;
+      }
+
+      .header-account {
+        max-width: none;
+      }
+
+      .site-nav {
+        top: 108px;
+        right: 12px;
+        left: 12px;
+      }
+
+      .hero {
+        min-height: 720px;
+        padding-top: 128px;
+        background-position: 58% center;
+      }
+
+      .hero-photo {
+        object-position: 58% center;
+      }
+
+      .hero-content {
+        width: calc(100% - 28px);
+        margin: 0 auto 92px;
+      }
+
+      .hero h1 {
+        font-size: clamp(30px, 10vw, 40px);
+        line-height: 1.08;
+      }
+
+      .hero-copy {
+        margin-top: 16px;
+        font-size: 16px;
+      }
+
+      .hero-actions {
+        margin-top: 22px;
+      }
+
+      .hero-actions .button {
+        width: 100%;
+      }
+
+      .hero-arrow {
+        bottom: 24px;
+      }
+
+      .quick-info {
+        width: calc(100% - 24px);
+        margin-top: 0;
+      }
+
+      .section,
+      .contact {
+        width: calc(100% - 24px);
+        padding-top: 54px;
+      }
+
+      .section h2,
+      .contact h2 {
+        font-size: clamp(26px, 9vw, 34px);
+      }
+
+      .service-card,
+      .package-grid article,
+      .room-list article {
+        padding: 20px;
+        min-height: auto;
+      }
+
+      .rooms,
+      .team {
+        padding-inline: 12px;
+      }
+
+      .room-visual,
+      .portrait {
+        min-height: 220px;
+      }
+
+      .booking-form {
+        padding: 18px;
+      }
+
+      .modal-backdrop {
+        align-items: flex-start;
+        padding: 10px;
+      }
+
+      .modal-window {
+        max-height: calc(100dvh - 20px);
+      }
+
+      .modal-head {
+        padding: 18px;
+      }
+
+      .admin-toolbar {
+        right: 10px;
+        bottom: 10px;
+        left: 10px;
+        display: grid;
+        grid-template-columns: 1fr repeat(3, auto);
+      }
+
+      .admin-status {
+        grid-column: 1 / -1;
+        min-width: 0;
+      }
+
+      .user-menu-grid {
+        gap: 10px;
+        padding: 18px;
+      }
+
+      .user-menu-card {
+        min-height: auto;
+        padding: 16px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .brand span:last-child {
+        display: block;
+      }
+
+      .brand strong {
+        font-size: 14px;
+      }
+
+      .brand small {
+        font-size: 11px;
+      }
+
+      .header-actions {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .site-nav {
+        top: 154px;
+      }
+
+      .hero {
+        padding-top: 168px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <header class="site-header" data-header>
+    <a class="brand" href="#home" aria-label="Мандах Нярайн Сувилал нүүр хуудас">
+      <span class="brand-mark"><img src="assets/mandah-mark.png" alt="" aria-hidden="true" /></span>
+      <span><strong data-i18n="brand.name">Мандах Нярайн</strong><small data-i18n="brand.type">Сувилал</small></span>
+    </a>
+
+    <nav class="site-nav" data-nav>
+      <a href="#services" data-i18n="nav.services">Үйлчилгээ</a>
+      <a href="#rooms" data-i18n="nav.rooms">Өрөө</a>
+      <a href="#schedule" data-i18n="nav.schedule">Хөтөлбөр</a>
+      <a href="#team" data-i18n="nav.team">Мэргэжилтнүүд</a>
+      <a href="#contact" data-i18n="nav.contact">Холбоо барих</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="header-login" type="button" data-auth-guest data-open-login data-i18n="login.open">Нэвтрэх</button>
+      <button class="header-register" type="button" data-auth-guest data-open-registration data-i18n="registration.open">Бүртгүүлэх</button>
+      <div class="header-user" data-header-user hidden>
+        <a class="header-user-link" href="profile.html" data-profile-link aria-label="Profile">
+          <span class="header-avatar" data-header-avatar>МН</span>
+          <span class="header-account" data-header-account>Profile</span>
+        </a>
+        <button class="header-logout" type="button" data-logout data-i18n="auth.logout">Гарах</button>
+      </div>      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Шөнийн горим"><span data-theme-icon>☾</span><span data-theme-label>Шөнө</span></button>
+      <label class="language-control">
+        <span class="visually-hidden" data-i18n="language.label">Хэл сонгох</span>
+        <select class="language-select" data-language-select aria-label="Хэл сонгох">
+          <option value="mn">Монгол</option>
+          <option value="en">English</option>
+          <option value="ru">Русский</option>
+          <option value="zh">中文</option>
+        </select>
+      </label>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-label="Цэс нээх"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="admin-toolbar" data-admin-toolbar hidden>
+    <strong>Admin</strong>
+    <button type="button" data-admin-edit>Засах</button>
+    <button type="button" data-admin-save hidden>Хадгалах</button>
+    <button type="button" data-admin-cancel hidden>Болих</button>
+    <a href="admin.html">Самбар</a>
+    <span class="admin-status" data-admin-status></span>
+  </div>
+
+  <main id="home">
+    <section class="hero">
+      <img class="hero-photo" data-hero-photo src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=1800&q=82" alt="" aria-hidden="true" />
+      <button class="hero-arrow hero-arrow-left" type="button" data-hero-prev aria-label="Өмнөх зураг">‹</button>
+      <button class="hero-arrow hero-arrow-right" type="button" data-hero-next aria-label="Дараагийн зураг">›</button>      <div class="hero-content">
+        <p class="eyebrow" data-i18n="hero.eyebrow">Төрсний дараах нөхөн сэргэлт ба нярайн асаргаа</p>
+        <h1 data-i18n="hero.title">Эх, нярай хоёрт амар тайван сувилахуйн орчин</h1>
+        <p class="hero-copy" data-i18n="hero.copy">Мэргэжлийн сувилагч, эмчийн зөвлөгөө, шим тэжээлтэй хоол, нярайн өдөр тутмын асаргаа, ээжийн амралт сэргэлтийг нэг дор.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#contact" data-i18n="hero.book">Цаг захиалах</a>
+          <a class="button button-light" href="#services" data-i18n="hero.viewServices">Үйлчилгээ харах</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="quick-info" aria-label="Гол мэдээлэл">
+      <article><span data-admin-field="quick.0.value">24/7</span><p data-i18n="quick.care">Сувилахуйн хяналт</p></article>
+      <article><span data-admin-field="quick.1.value">1-14</span><p data-i18n="quick.days">Хоногийн багц</p></article>
+      <article><span data-admin-field="quick.2.value">1:1</span><p data-i18n="quick.consult">Ээжид зориулсан зөвлөгөө</p></article>
+      <article><span data-admin-field="quick.3.value">3</span><p data-i18n="quick.meals">Тэнцвэртэй хоол өдөр бүр</p></article>
+    </section>
+
+    <section class="section intro">
+      <div><p class="section-kicker" data-i18n="intro.kicker">Бидний орчин</p><h2 data-i18n="intro.title">Тайван амралт, найдвартай асаргаа, гэр бүлд ойр мэдрэмж</h2></div>
+      <p data-i18n="intro.copy">Мандах Нярайн Сувилал нь төрсний дараах ядаргаа тайлах, нярайн анхны өдрүүдийн асаргаанд дэмжлэг үзүүлэх, ээжид өөртөө итгэлтэй болох орчинг бүрдүүлдэг.</p>
+    </section>
+
+    <section class="section services" id="services">
+      <div class="section-heading"><p class="section-kicker" data-i18n="services.kicker">Үйлчилгээ</p><h2 data-i18n="services.title">Ээж, нярайд хэрэгтэй бүх дэмжлэг</h2></div>
+      <div class="service-grid">
+        <article class="service-card"><div class="icon">+</div><h3 data-i18n="services.recovery.title">Эхийн нөхөн сэргэлт</h3><p data-i18n="services.recovery.copy">Амралт, халуун жин, хөнгөн дасгал, хооллолтын зөвлөгөөг өдөр тутам хослуулна.</p></article>
+        <article class="service-card"><div class="icon">◦</div><h3 data-i18n="services.baby.title">Нярайн асаргаа</h3><p data-i18n="services.baby.copy">Усанд оруулах, хүй арчилгаа, жин хяналт, унтах хэмнэлийг мэргэжлийн баг дэмжинэ.</p></article>
+        <article class="service-card"><div class="icon">✓</div><h3 data-i18n="services.feeding.title">Хөхүүл зөвлөгөө</h3><p data-i18n="services.feeding.copy">Хөхүүл байрлал, сүүний гарц, ээжийн тав тухыг нэг бүрчлэн зөвлөнө.</p></article>
+        <article class="service-card"><div class="icon">♥</div><h3 data-i18n="services.support.title">Сэтгэлзүйн дэмжлэг</h3><p data-i18n="services.support.copy">Төрсний дараах сэтгэл санааны өөрчлөлт, гэр бүлийн оролцоонд тайван зөвлөгөө өгнө.</p></article>
+      </div>
+    </section>
+
+    <section class="section rooms" id="rooms">
+      <div class="section-heading"><p class="section-kicker" data-i18n="rooms.kicker">Өрөөний сонголт</p><h2 data-i18n="rooms.title">Цэвэр, тухтай, нам гүм амрах өрөөнүүд</h2></div>
+      <div class="room-layout">
+        <article class="room-card featured"><div class="room-visual" aria-hidden="true"><img data-room-image src="assets/room-photo.png" alt="" /></div><div><h3 data-i18n="rooms.family.title">Гэр бүлийн өрөө</h3><p data-i18n="rooms.family.copy">Ээж, нярай, асран хамгаалагч хамт байрлах боломжтой, ариун цэврийн өрөөтэй.</p><span data-i18n="rooms.family.tag">7 хоногийн багц</span></div></article>
+        <div class="room-list">
+          <article><h3 data-i18n="rooms.standard.title">Стандарт өрөө</h3><p data-i18n="rooms.standard.copy">Нэг ээж, нэг нярайд зориулсан тайван өрөө.</p></article>
+          <article><h3 data-i18n="rooms.deluxe.title">Делюкс өрөө</h3><p data-i18n="rooms.deluxe.copy">Илүү зайтай, зочин хүлээн авах хэсэгтэй.</p></article>
+          <article><h3 data-i18n="rooms.day.title">Өдрийн сувилгаа</h3><p data-i18n="rooms.day.copy">Өдрийн үзлэг, зөвлөгөө, нярайн асаргааны багц.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section schedule" id="schedule">
+      <div class="section-heading"><p class="section-kicker" data-i18n="schedule.kicker">Өдрийн хөтөлбөр</p><h2 data-i18n="schedule.title">Ээжид амралт, нярайд тогтмол хэмнэл</h2></div>
+      <div class="timeline">
+        <article><time data-admin-field="schedule.morning.time">08:30</time><div><h3 data-i18n="schedule.morning.title">Өглөөний үзлэг</h3><p data-i18n="schedule.morning.copy">Ээжийн даралт, биеийн байдал, нярайн жин болон арьсны өнгийг хянана.</p></div></article>
+        <article><time data-admin-field="schedule.baby.time">11:00</time><div><h3 data-i18n="schedule.baby.title">Нярайн асаргаа</h3><p data-i18n="schedule.baby.copy">Усанд оруулах, хүй цэвэрлэх, хувцаслалт болон унтах орчны зөвлөгөө.</p></div></article>
+        <article><time data-admin-field="schedule.recovery.time">15:00</time><div><h3 data-i18n="schedule.recovery.title">Эхийн нөхөн сэргэлт</h3><p data-i18n="schedule.recovery.copy">Хөнгөн сунгалт, амралтын цаг, хооллолт болон хөхүүл зөвлөгөө.</p></div></article>
+        <article><time data-admin-field="schedule.evening.time">20:00</time><div><h3 data-i18n="schedule.evening.title">Оройн хяналт</h3><p data-i18n="schedule.evening.copy">Нярайн унтах хэмнэл, ээжийн амрах нөхцөлийг шалгаж тайван орчныг бүрдүүлнэ.</p></div></article>
+      </div>
+    </section>
+
+    <section class="section team" id="team">
+      <div class="section-heading"><p class="section-kicker" data-i18n="team.kicker">Манай баг</p><h2 data-i18n="team.title">Эмч, эх баригч, сувилагчийн хамтарсан халамж</h2></div>
+      <div class="team-grid">
+        <article><div class="portrait" data-admin-field="team.0.initial">Э</div><h3 data-admin-field="team.0.name">Н. Энхтуяа</h3><p data-i18n="team.doctor">Эх барих эмэгтэйчүүдийн эмч</p></article>
+        <article><div class="portrait" data-admin-field="team.1.initial">С</div><h3 data-admin-field="team.1.name">Б. Солонго</h3><p data-i18n="team.nurse">Нярайн сувилагч</p></article>
+        <article><div class="portrait" data-admin-field="team.2.initial">М</div><h3 data-admin-field="team.2.name">Д. Мөнхчимэг</h3><p data-i18n="team.consultant">Хөхүүл зөвлөх</p></article>
+      </div>
+    </section>
+
+    <section class="section packages" id="packages">
+      <div class="section-heading"><p class="section-kicker" data-i18n="packages.kicker">Төлбөр</p><h2 data-i18n="packages.title">1 хоногийн төлбөр 280,000₮</h2></div>
+      <div class="package-grid">
+        <article data-package-card data-package-key="one" role="button" tabindex="0"><h3 data-i18n="packages.one.title">1 хоног</h3><p data-i18n="packages.one.copy">Ээж, нярай хамт байрлах хоногийн үндсэн төлбөр.</p><strong data-admin-field="packages.one.price">280,000₮</strong><span class="package-more" data-i18n="packages.more">Дэлгэрэнгүй</span></article>
+        <article data-package-card data-package-key="five" role="button" tabindex="0"><h3 data-i18n="packages.five.title">5 хоног</h3><p data-i18n="packages.five.copy">Төрсний дараах богино хугацааны амралт, үндсэн асаргаа.</p><strong data-admin-field="packages.five.price">1,400,000₮</strong><span class="package-more" data-i18n="packages.more">Дэлгэрэнгүй</span></article>
+        <article class="highlight" data-package-card data-package-key="seven" role="button" tabindex="0"><h3 data-i18n="packages.seven.title">7 хоног</h3><p data-i18n="packages.seven.copy">Эхийн нөхөн сэргэлт, нярайн бүрэн асаргаанд тохиромжтой багц.</p><strong data-admin-field="packages.seven.price">1,960,000₮</strong><span class="package-more" data-i18n="packages.more">Дэлгэрэнгүй</span></article>
+        <article data-package-card data-package-key="fourteen" role="button" tabindex="0"><h3 data-i18n="packages.fourteen.title">14 хоног</h3><p data-i18n="packages.fourteen.copy">Урт хугацааны амралт, тогтмол хяналт, гэр бүлийн зөвлөгөө.</p><strong data-admin-field="packages.fourteen.price">3,920,000₮</strong><span class="package-more" data-i18n="packages.more">Дэлгэрэнгүй</span></article>
+        <article data-package-card data-package-key="thirty" role="button" tabindex="0"><h3 data-i18n="packages.thirty.title">30 хоног</h3><p data-i18n="packages.thirty.copy">Сарын турш амрах, тогтмол хяналттай бүрэн багц.</p><strong data-admin-field="packages.thirty.price">8,400,000₮</strong><span class="package-more" data-i18n="packages.more">Дэлгэрэнгүй</span></article>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="contact-info">
+        <p class="section-kicker" data-i18n="contact.kicker">Холбоо барих</p>
+        <h2 data-i18n="contact.title">Цаг захиалах хүсэлт илгээх</h2>
+        <p data-i18n="contact.copy">Та хүсэлтээ үлдээгээрэй. Бид ажлын цагаар холбогдож өрөөний боломж, тохирох багцыг тайлбарлана.</p>
+        <ul>
+          <li><strong data-i18n="contact.phoneLabel">Утас:</strong> <span data-site-phone data-admin-field="contact.phone">7711-2233</span></li>
+          <li><strong data-i18n="contact.addressLabel">Хаяг:</strong> <span data-i18n="contact.address">Улаанбаатар хот, Хан-Уул дүүрэг</span></li>
+          <li><strong data-i18n="contact.hoursLabel">Цагийн хуваарь:</strong> <span data-i18n="contact.hours">Өдөр бүр 08:00-21:00</span></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" data-user-menu-modal aria-hidden="true">
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="user-menu-title">
+      <div class="modal-head">
+        <div>
+          <p class="section-kicker" data-i18n="userMenu.kicker">Хэрэглэгч</p>
+          <h2 id="user-menu-title" data-i18n="userMenu.title">Хэрэглэгчийн цэс</h2>
+          <p data-i18n="userMenu.copy">Та нэвтэрлээ. Эндээс захиалга, үнэ болон хэрэглэгчийн үйлдлүүд рүү орно.</p>
+          <span class="user-menu-account" data-user-menu-account></span>
+        </div>
+        <button class="modal-close" type="button" data-close-user-menu aria-label="Цонх хаах">×</button>
+      </div>
+      <div class="user-menu-grid">
+        <button class="user-menu-card" type="button" data-user-menu-profile>
+          <strong data-i18n="userMenu.profileTitle">Хэрэглэгчийн profile</strong>
+          <span data-i18n="userMenu.profileCopy">Profile зураг, хувийн мэдээлэлтэй хуудас руу орно.</span>
+        </button>
+        <button class="user-menu-card" type="button" data-user-menu-chat>
+          <strong data-i18n="userMenu.chatTitle">Эмчтэй чатлах</strong>
+          <span data-i18n="userMenu.chatCopy">Profile дээрээс эмчид мессеж бичнэ.</span>
+        </button>
+        <button class="user-menu-card" type="button" data-user-menu-register>
+          <strong data-i18n="userMenu.bookingTitle">Захиалга хийх</strong>
+          <span data-i18n="userMenu.bookingCopy">Сувиллын бүртгэлийн цонх руу орно.</span>
+        </button>
+        <button class="user-menu-card" type="button" data-user-menu-pricing>
+          <strong data-i18n="userMenu.pricingTitle">Үнэ харах</strong>
+          <span data-i18n="userMenu.pricingCopy">1, 5, 7, 14, 30 хоногийн үнийг харна.</span>
+        </button>
+        <button class="user-menu-card" type="button" data-user-menu-contact>
+          <strong data-i18n="userMenu.contactTitle">Холбоо барих</strong>
+          <span data-i18n="userMenu.contactCopy">Утас, хаяг, цагийн хуваарь руу очно.</span>
+        </button>
+        <button class="user-menu-card" type="button" data-user-menu-logout>
+          <strong data-i18n="userMenu.logoutTitle">Гарах</strong>
+          <span data-i18n="userMenu.logoutCopy">Хэрэглэгчийн цэсийг хаана.</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop" data-login-modal aria-hidden="true">
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="login-title">
+      <div class="modal-head">
+        <div>
+          <p class="section-kicker" data-i18n="login.kicker">Нэвтрэх</p>
+          <h2 id="login-title" data-i18n="login.title">Хэрэглэгчийн нэвтрэх хэсэг</h2>
+          <p data-i18n="login.copy">Бүртгэлтэй хэрэглэгч утас эсвэл имэйлээрээ нэвтэрнэ.</p>
+        </div>
+        <button class="modal-close" type="button" data-close-login aria-label="Цонх хаах">×</button>
+      </div>
+      <form class="booking-form" data-login-form>
+        <label><span data-i18n="login.account">Утас эсвэл имэйл</span><input type="text" name="account" data-i18n-placeholder="login.accountPlaceholder" placeholder="Утас эсвэл имэйлээ бичнэ үү" required /></label>
+        <label><span data-i18n="login.password">Нууц үг</span><input type="password" name="password" data-i18n-placeholder="login.passwordPlaceholder" placeholder="Нууц үгээ бичнэ үү" required /></label>
+        <div class="login-row">
+          <label class="login-check"><input type="checkbox" name="remember" /><span data-i18n="login.remember">Намайг сана</span></label>
+          <button class="login-link" type="button" data-i18n="login.forgot">Нууц үг сэргээх</button>
+        </div>
+        <button class="button button-primary" type="submit" data-i18n="login.submit">Нэвтрэх</button>
+        <button class="login-register-link" type="button" data-open-signup data-i18n="signup.open">Бүртгүүлэх</button>
+        <p class="form-note" data-login-note></p>
+      </form>
+    </div>
+  </div>
+  <div class="modal-backdrop" data-signup-modal aria-hidden="true">
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="signup-title">
+      <div class="modal-head">
+        <div>
+          <p class="section-kicker" data-i18n="signup.kicker">Sign up</p>
+          <h2 id="signup-title" data-i18n="signup.title">Хэрэглэгчийн бүртгэл үүсгэх</h2>
+          <p data-i18n="signup.copy">Шинэ хэрэглэгчийн мэдээллээ оруулаад account үүсгэнэ.</p>
+        </div>
+        <button class="modal-close" type="button" data-close-signup aria-label="Цонх хаах">×</button>
+      </div>
+      <form class="booking-form" data-signup-form>
+        <label><span data-i18n="signup.name">Таны нэр</span><input type="text" name="name" data-i18n-placeholder="signup.namePlaceholder" placeholder="Нэрээ бичнэ үү" required /></label>
+        <label><span data-i18n="signup.account">Утас эсвэл имэйл</span><input type="text" name="account" data-i18n-placeholder="signup.accountPlaceholder" placeholder="Утас эсвэл имэйлээ бичнэ үү" required /></label>
+        <label><span data-i18n="signup.password">Нууц үг</span><input type="password" name="password" data-i18n-placeholder="signup.passwordPlaceholder" placeholder="Нууц үгээ бичнэ үү" required /></label>
+        <label><span data-i18n="signup.confirm">Нууц үг давтах</span><input type="password" name="confirm" data-i18n-placeholder="signup.confirmPlaceholder" placeholder="Нууц үгээ давтаж бичнэ үү" required /></label>
+        <button class="button button-primary" type="submit" data-i18n="signup.submit">Sign up</button>
+        <button class="login-register-link" type="button" data-open-login data-i18n="signup.loginLink">Нэвтрэх хэсэг рүү буцах</button>
+        <p class="form-note" data-signup-note></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" data-registration-modal aria-hidden="true">
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="registration-title">
+      <div class="modal-head">
+        <div>
+          <p class="section-kicker" data-i18n="registration.kicker">Бүртгэл</p>
+          <h2 id="registration-title" data-i18n="registration.title">Бүртгэлийн мэдээлэл</h2>
+          <p data-i18n="registration.copy">Та мэдээллээ үлдээгээрэй. Бид өрөөний боломж болон тохирох багцыг баталгаажуулж холбогдоно.</p>
+        </div>
+        <button class="modal-close" type="button" data-close-registration aria-label="Цонх хаах">×</button>
+      </div>
+      <form class="booking-form" data-booking-form>
+        <label><span data-i18n="form.name">Таны нэр</span><input type="text" name="name" data-i18n-placeholder="form.namePlaceholder" placeholder="Нэрээ бичнэ үү" required /></label>
+        <label><span data-i18n="form.phone">Утасны дугаар</span><input type="tel" name="phone" data-i18n-placeholder="form.phonePlaceholder" placeholder="Жишээ: 99112233" required /></label>
+        <label><span data-i18n="form.package">Сонирхож буй багц</span><select name="package" required><option value="" data-i18n="form.optionDefault">Сонгох</option><option data-i18n="form.packageOne" data-package-option="one">1 хоног - 280,000₮</option><option data-i18n="form.packageFive" data-package-option="five">5 хоног - 1,400,000₮</option><option data-i18n="form.packageSeven" data-package-option="seven">7 хоног - 1,960,000₮</option><option data-i18n="form.packageFourteen" data-package-option="fourteen">14 хоног - 3,920,000₮</option><option data-i18n="form.packageThirty" data-package-option="thirty">30 хоног - 8,400,000₮</option></select></label>
+        <label><span data-i18n="form.language">Харилцах хэл</span><select name="language" data-preferred-language><option value="mn">Монгол</option><option value="en">English</option><option value="ru">Русский</option><option value="zh">中文</option></select></label>
+        <label><span data-i18n="form.message">Нэмэлт мэдээлэл</span><textarea name="message" rows="4" data-i18n-placeholder="form.messagePlaceholder" placeholder="Төрөх хугацаа, байрлах өдөр гэх мэт"></textarea></label>
+        <button class="button button-primary" type="submit" data-i18n="form.submit">Хүсэлт илгээх</button>
+        <p class="form-note" data-form-note></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" data-package-modal aria-hidden="true">
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="package-detail-title">
+      <div class="modal-head">
+        <div>
+          <p class="section-kicker" data-i18n="packages.detail.kicker">Багцын дэлгэрэнгүй</p>
+          <h2 id="package-detail-title" data-package-title>1 хоног</h2>
+        </div>
+        <button class="modal-close" type="button" data-close-package aria-label="Цонх хаах">×</button>
+      </div>
+      <div class="package-detail-body">
+        <strong class="package-detail-price" data-package-price>280,000₮</strong>
+        <p data-package-copy></p>
+        <ul class="package-detail-list" data-package-list></ul>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-main">
+      <p data-i18n="footer.copy">© 2026 Мандах Нярайн Сувилал. Бүх эрх хуулиар хамгаалагдсан.</p>
+      <a href="#home" data-i18n="footer.top">Дээш буцах</a>
+    </div>
+    <div class="creator-credit" aria-label="Created by Team Agency">
+      <span>Created by</span>
+      <img class="creator-logo" src="assets/team-agency-logo.png" alt="Team Agency" />
+    </div>
+  </footer>
+
+  <script>
+    const translations = {
+      mn: {
+        "brand.name": "Мандах Нярайн", "brand.type": "Сувилал", "language.label": "Хэл сонгох", "userMenu.kicker": "Хэрэглэгч", "userMenu.title": "Хэрэглэгчийн цэс", "userMenu.copy": "Та нэвтэрлээ. Эндээс захиалга, үнэ болон хэрэглэгчийн үйлдлүүд рүү орно.", "userMenu.chatTitle": "Эмчтэй чатлах", "userMenu.chatCopy": "Profile дээрээс эмчид мессеж бичнэ.", "userMenu.bookingTitle": "Захиалга хийх", "userMenu.bookingCopy": "Сувиллын бүртгэлийн цонх руу орно.", "userMenu.pricingTitle": "Үнэ харах", "userMenu.pricingCopy": "1, 5, 7, 14, 30 хоногийн үнийг харна.", "userMenu.contactTitle": "Холбоо барих", "userMenu.contactCopy": "Утас, хаяг, цагийн хуваарь руу очно.", "userMenu.logoutTitle": "Гарах", "userMenu.logoutCopy": "Хэрэглэгчийн цэсийг хаана.", "userMenu.close": "Цонх хаах", "signup.open": "Sign up", "signup.kicker": "Sign up", "signup.title": "Хэрэглэгчийн бүртгэл үүсгэх", "signup.copy": "Шинэ хэрэглэгчийн мэдээллээ оруулаад account үүсгэнэ.", "signup.name": "Таны нэр", "signup.namePlaceholder": "Нэрээ бичнэ үү", "signup.account": "Утас эсвэл имэйл", "signup.accountPlaceholder": "Утас эсвэл имэйлээ бичнэ үү", "signup.password": "Нууц үг", "signup.passwordPlaceholder": "Нууц үгээ бичнэ үү", "signup.confirm": "Нууц үг давтах", "signup.confirmPlaceholder": "Нууц үгээ давтаж бичнэ үү", "signup.submit": "Sign up", "signup.loginLink": "Нэвтрэх хэсэг рүү буцах", "signup.success": "таны хэрэглэгчийн бүртгэл үүсгэлээ.", "signup.close": "Цонх хаах", "login.open": "Нэвтрэх", "login.kicker": "Нэвтрэх", "login.title": "Хэрэглэгчийн нэвтрэх хэсэг", "login.copy": "Бүртгэлтэй хэрэглэгч утас эсвэл имэйлээрээ нэвтэрнэ.", "login.account": "Утас эсвэл имэйл", "login.accountPlaceholder": "Утас эсвэл имэйлээ бичнэ үү", "login.password": "Нууц үг", "login.passwordPlaceholder": "Нууц үгээ бичнэ үү", "login.remember": "Намайг сана", "login.forgot": "Нууц үг сэргээх", "login.submit": "Нэвтрэх", "login.success": "нэвтрэх хүсэлт хүлээн авлаа.", "login.registerLink": "Бүртгүүлэх", "login.close": "Цонх хаах",
+        "nav.services": "Үйлчилгээ", "nav.rooms": "Өрөө", "nav.schedule": "Хөтөлбөр", "nav.team": "Мэргэжилтнүүд", "nav.contact": "Холбоо барих",
+        "hero.eyebrow": "Төрсний дараах нөхөн сэргэлт ба нярайн асаргаа", "hero.title": "Эх, нярай хоёрт амар тайван сувилахуйн орчин", "hero.copy": "Мэргэжлийн сувилагч, эмчийн зөвлөгөө, шим тэжээлтэй хоол, нярайн өдөр тутмын асаргаа, ээжийн амралт сэргэлтийг нэг дор.", "hero.book": "Цаг захиалах", "hero.viewServices": "Үйлчилгээ харах",
+        "quick.care": "Сувилахуйн хяналт", "quick.days": "Хоногийн багц", "quick.consult": "Ээжид зориулсан зөвлөгөө", "quick.meals": "Тэнцвэртэй хоол өдөр бүр",
+        "intro.kicker": "Бидний орчин", "intro.title": "Тайван амралт, найдвартай асаргаа, гэр бүлд ойр мэдрэмж", "intro.copy": "Мандах Нярайн Сувилал - эх, нярайд зориулсан сувилал.",
+        "services.kicker": "Үйлчилгээ", "services.title": "Ээж, нярайд хэрэгтэй бүх дэмжлэг", "services.recovery.title": "Эхийн нөхөн сэргэлт", "services.recovery.copy": "Амралт, халуун жин, хөнгөн дасгал, хооллолтын зөвлөгөөг өдөр тутам хослуулна.", "services.baby.title": "Нярайн асаргаа", "services.baby.copy": "Усанд оруулах, хүй арчилгаа, жин хяналт, унтах хэмнэлийг мэргэжлийн баг дэмжинэ.", "services.feeding.title": "Хөхүүл зөвлөгөө", "services.feeding.copy": "Хөхүүл байрлал, сүүний гарц, ээжийн тав тухыг нэг бүрчлэн зөвлөнө.", "services.support.title": "Сэтгэлзүйн дэмжлэг", "services.support.copy": "Төрсний дараах сэтгэл санааны өөрчлөлт, гэр бүлийн оролцоонд тайван зөвлөгөө өгнө.",
+        "rooms.kicker": "Өрөөний сонголт", "rooms.title": "Цэвэр, тухтай, нам гүм амрах өрөөнүүд", "rooms.family.title": "Гэр бүлийн өрөө", "rooms.family.copy": "Ээж, нярай, асран хамгаалагч хамт байрлах боломжтой, ариун цэврийн өрөөтэй.", "rooms.family.tag": "7 хоногийн багц", "rooms.standard.title": "Стандарт өрөө", "rooms.standard.copy": "Нэг ээж, нэг нярайд зориулсан тайван өрөө.", "rooms.deluxe.title": "Делюкс өрөө", "rooms.deluxe.copy": "Илүү зайтай, зочин хүлээн авах хэсэгтэй.", "rooms.day.title": "Өдрийн сувилгаа", "rooms.day.copy": "Өдрийн үзлэг, зөвлөгөө, нярайн асаргааны багц.",
+        "schedule.kicker": "Өдрийн хөтөлбөр", "schedule.title": "Ээжид амралт, нярайд тогтмол хэмнэл", "schedule.morning.title": "Өглөөний үзлэг", "schedule.morning.copy": "Ээжийн даралт, биеийн байдал, нярайн жин болон арьсны өнгийг хянана.", "schedule.baby.title": "Нярайн асаргаа", "schedule.baby.copy": "Усанд оруулах, хүй цэвэрлэх, хувцаслалт болон унтах орчны зөвлөгөө.", "schedule.recovery.title": "Эхийн нөхөн сэргэлт", "schedule.recovery.copy": "Хөнгөн сунгалт, амралтын цаг, хооллолт болон хөхүүл зөвлөгөө.", "schedule.evening.title": "Оройн хяналт", "schedule.evening.copy": "Нярайн унтах хэмнэл, ээжийн амрах нөхцөлийг шалгаж тайван орчныг бүрдүүлнэ.",
+        "team.kicker": "Манай баг", "team.title": "Эмч, эх баригч, сувилагчийн хамтарсан халамж", "team.doctor": "Эх барих эмэгтэйчүүдийн эмч", "team.nurse": "Нярайн сувилагч", "team.consultant": "Хөхүүл зөвлөх",
+        "packages.kicker": "Төлбөр", "packages.title": "1 хоногийн төлбөр 280,000₮", "packages.one.title": "1 хоног", "packages.one.copy": "Ээж, нярай хамт байрлах хоногийн үндсэн төлбөр.", "packages.five.title": "5 хоног", "packages.five.copy": "Төрсний дараах богино хугацааны амралт, үндсэн асаргаа.", "packages.seven.title": "7 хоног", "packages.seven.copy": "Эхийн нөхөн сэргэлт, нярайн бүрэн асаргаанд тохиромжтой багц.", "packages.fourteen.title": "14 хоног", "packages.fourteen.copy": "Урт хугацааны амралт, тогтмол хяналт, гэр бүлийн зөвлөгөө.", "packages.thirty.title": "30 хоног", "packages.thirty.copy": "Сарын турш амрах, тогтмол хяналттай бүрэн багц.", "packages.more": "Дэлгэрэнгүй", "packages.detail.kicker": "Багцын дэлгэрэнгүй", "packages.detail.close": "Цонх хаах",
+        "contact.kicker": "Холбоо барих", "contact.title": "Цаг захиалах хүсэлт илгээх", "contact.copy": "Та хүсэлтээ үлдээгээрэй. Бид ажлын цагаар холбогдож өрөөний боломж, тохирох багцыг тайлбарлана.", "contact.phoneLabel": "Утас:", "contact.addressLabel": "Хаяг:", "contact.address": "Улаанбаатар хот, Хан-Уул дүүрэг", "contact.hoursLabel": "Цагийн хуваарь:", "contact.hours": "Өдөр бүр 08:00-21:00", "registration.open": "Бүртгүүлэх", "registration.kicker": "Бүртгэл", "registration.title": "Бүртгэлийн мэдээлэл", "registration.copy": "Та мэдээллээ үлдээгээрэй. Бид өрөөний боломж болон тохирох багцыг баталгаажуулж холбогдоно.", "registration.close": "Цонх хаах",
+        "form.name": "Таны нэр", "form.namePlaceholder": "Нэрээ бичнэ үү", "form.phone": "Утасны дугаар", "form.phonePlaceholder": "Жишээ: 99112233", "form.package": "Сонирхож буй багц", "form.optionDefault": "Сонгох", "form.packageOne": "1 хоног - 280,000₮", "form.packageFive": "5 хоног - 1,400,000₮", "form.packageSeven": "7 хоног - 1,960,000₮", "form.packageFourteen": "14 хоног - 3,920,000₮", "form.packageThirty": "30 хоног - 8,400,000₮", "form.language": "Харилцах хэл", "form.message": "Нэмэлт мэдээлэл", "form.messagePlaceholder": "Төрөх хугацаа, байрлах өдөр гэх мэт", "form.submit": "Хүсэлт илгээх", "form.success": "таны хүсэлтийг хүлээн авлаа. Бид удахгүй холбогдоно.",
+        "footer.copy": "© 2026 Мандах Нярайн Сувилал.", "footer.top": "Дээш буцах", "nav.open": "Цэс нээх", "nav.close": "Цэс хаах"
+      },
+      en: {
+        "brand.name": "Мандах Нярайн", "brand.type": "Сувилал", "language.label": "Choose language", "userMenu.kicker": "User", "userMenu.title": "User menu", "userMenu.copy": "You are logged in. Continue to bookings, pricing, or user actions from here.", "userMenu.chatTitle": "Chat with doctor", "userMenu.chatCopy": "Send a message to the doctor from your profile.", "userMenu.bookingTitle": "Book care", "userMenu.bookingCopy": "Open the care booking form.", "userMenu.pricingTitle": "View pricing", "userMenu.pricingCopy": "See 1, 5, 7, 14, and 30 day prices.", "userMenu.contactTitle": "Contact", "userMenu.contactCopy": "Go to phone, address, and hours.", "userMenu.logoutTitle": "Log out", "userMenu.logoutCopy": "Close the user menu.", "userMenu.close": "Close window", "signup.open": "Sign up", "signup.kicker": "Sign up", "signup.title": "Create your account", "signup.copy": "Enter your details to create a user account.", "signup.name": "Your name", "signup.namePlaceholder": "Enter your name", "signup.account": "Phone or email", "signup.accountPlaceholder": "Enter phone or email", "signup.password": "Password", "signup.passwordPlaceholder": "Enter your password", "signup.confirm": "Confirm password", "signup.confirmPlaceholder": "Re-enter your password", "signup.submit": "Sign up", "signup.loginLink": "Back to login", "signup.success": "your account registration has been created.", "signup.close": "Close window", "login.open": "Log in", "login.kicker": "Login", "login.title": "Member login", "login.copy": "Registered users can log in with a phone number or email.", "login.account": "Phone or email", "login.accountPlaceholder": "Enter phone or email", "login.password": "Password", "login.passwordPlaceholder": "Enter your password", "login.remember": "Remember me", "login.forgot": "Reset password", "login.submit": "Log in", "login.success": "login request received.", "login.registerLink": "Create account", "login.close": "Close window",
+        "nav.services": "Services", "nav.rooms": "Rooms", "nav.schedule": "Schedule", "nav.team": "Specialists", "nav.contact": "Contact",
+        "hero.eyebrow": "Postpartum recovery and newborn care", "hero.title": "Calm nursing care for mother and baby", "hero.copy": "Professional nurses, doctor guidance, nutritious meals, daily newborn care, and restful recovery for mothers in one place.", "hero.book": "Book a visit", "hero.viewServices": "View services",
+        "quick.care": "Nursing supervision", "quick.days": "Day packages", "quick.consult": "One-to-one support", "quick.meals": "Balanced meals daily",
+        "intro.kicker": "Our Environment", "intro.title": "Quiet rest, reliable care, and a family-friendly feeling", "intro.copy": "Мандах Нярайн Сувилал - эх, нярайд зориулсан сувилал.",
+        "services.kicker": "Services", "services.title": "Support mothers and newborns naturally need", "services.recovery.title": "Mother's recovery", "services.recovery.copy": "Rest, warm care, gentle movement, and nutrition guidance are combined every day.", "services.baby.title": "Newborn care", "services.baby.copy": "Bathing, umbilical care, weight checks, and sleep rhythm support from our professional team.", "services.feeding.title": "Breastfeeding advice", "services.feeding.copy": "Practical help with feeding positions, milk flow, and the mother's comfort.", "services.support.title": "Emotional support", "services.support.copy": "Calm guidance for postpartum emotions and family involvement.",
+        "rooms.kicker": "Room Options", "rooms.title": "Clean, comfortable, quiet rooms for recovery", "rooms.family.title": "Family room", "rooms.family.copy": "A room where mother, baby, and a caregiver can stay together, with a private bathroom.", "rooms.family.tag": "7-day package", "rooms.standard.title": "Standard room", "rooms.standard.copy": "A quiet room for one mother and one newborn.", "rooms.deluxe.title": "Deluxe room", "rooms.deluxe.copy": "More space with a small guest area.", "rooms.day.title": "Day care", "rooms.day.copy": "Daytime checkup, consultation, and newborn care package.",
+        "schedule.kicker": "Daily Schedule", "schedule.title": "Rest for mothers, steady rhythm for newborns", "schedule.morning.title": "Morning check", "schedule.morning.copy": "We monitor the mother's blood pressure and condition, plus the baby's weight and skin tone.", "schedule.baby.title": "Newborn care", "schedule.baby.copy": "Bathing, umbilical cleaning, clothing, and safe sleep environment guidance.", "schedule.recovery.title": "Mother's recovery", "schedule.recovery.copy": "Gentle stretching, rest time, nutrition, and breastfeeding advice.", "schedule.evening.title": "Evening check", "schedule.evening.copy": "We check the baby's sleep rhythm and the mother's rest conditions for a calm evening.",
+        "team.kicker": "Our Team", "team.title": "Coordinated care from doctors, midwives, and nurses", "team.doctor": "Obstetrician-gynecologist", "team.nurse": "Newborn nurse", "team.consultant": "Breastfeeding consultant",
+        "packages.kicker": "Pricing", "packages.title": "Daily rate: 280,000₮", "packages.one.title": "1 day", "packages.one.copy": "Basic daily stay for mother and baby.", "packages.five.title": "5 days", "packages.five.copy": "Short postpartum rest with essential care.", "packages.seven.title": "7 days", "packages.seven.copy": "A balanced package for recovery and full newborn care.", "packages.fourteen.title": "14 days", "packages.fourteen.copy": "Longer recovery, regular monitoring, and family guidance.", "packages.thirty.title": "30 days", "packages.thirty.copy": "A full month of rest with regular monitoring.", "packages.more": "Details", "packages.detail.kicker": "Package details", "packages.detail.close": "Close window",
+        "contact.kicker": "Contact", "contact.title": "Send a booking request", "contact.copy": "Leave your request and we will contact you during working hours to explain room availability and suitable packages.", "contact.phoneLabel": "Phone:", "contact.addressLabel": "Address:", "contact.address": "Khan-Uul District, Ulaanbaatar", "contact.hoursLabel": "Hours:", "contact.hours": "Every day 08:00-21:00", "registration.open": "Register", "registration.kicker": "Registration", "registration.title": "Registration details", "registration.copy": "Leave your information and we will confirm room availability and the right package for you.", "registration.close": "Close window",
+        "form.name": "Your name", "form.namePlaceholder": "Enter your name", "form.phone": "Phone number", "form.phonePlaceholder": "Example: 99112233", "form.package": "Interested package", "form.optionDefault": "Choose", "form.packageOne": "1 day - 280,000₮", "form.packageFive": "5 days - 1,400,000₮", "form.packageSeven": "7 days - 1,960,000₮", "form.packageFourteen": "14 days - 3,920,000₮", "form.packageThirty": "30 days - 8,400,000₮", "form.language": "Preferred language", "form.message": "Additional information", "form.messagePlaceholder": "Due date, preferred stay dates, etc.", "form.submit": "Send request", "form.success": "we received your request. We will contact you soon.",
+        "footer.copy": "© 2026 Мандах Нярайн Сувилал.", "footer.top": "Back to top", "nav.open": "Open menu", "nav.close": "Close menu"
+      },
+      ru: {
+        "brand.name": "Мандах Нярайн", "brand.type": "Сувилал", "language.label": "Выбрать язык", "userMenu.kicker": "Пользователь", "userMenu.title": "Меню пользователя", "userMenu.copy": "Вы вошли. Здесь можно перейти к записи, ценам и действиям пользователя.", "userMenu.chatTitle": "Чат с врачом", "userMenu.chatCopy": "Отправить сообщение врачу из профиля.", "userMenu.bookingTitle": "Записаться", "userMenu.bookingCopy": "Открыть форму записи в центр.", "userMenu.pricingTitle": "Посмотреть цены", "userMenu.pricingCopy": "Цены на 1, 5, 7, 14 и 30 дней.", "userMenu.contactTitle": "Контакты", "userMenu.contactCopy": "Перейти к телефону, адресу и часам работы.", "userMenu.logoutTitle": "Выйти", "userMenu.logoutCopy": "Закрыть меню пользователя.", "userMenu.close": "Закрыть окно", "signup.open": "Sign up", "signup.kicker": "Sign up", "signup.title": "Создать учетную запись", "signup.copy": "Введите данные, чтобы создать учетную запись пользователя.", "signup.name": "Ваше имя", "signup.namePlaceholder": "Введите имя", "signup.account": "Телефон или email", "signup.accountPlaceholder": "Введите телефон или email", "signup.password": "Пароль", "signup.passwordPlaceholder": "Введите пароль", "signup.confirm": "Повторите пароль", "signup.confirmPlaceholder": "Введите пароль еще раз", "signup.submit": "Sign up", "signup.loginLink": "Вернуться ко входу", "signup.success": "регистрация пользователя создана.", "signup.close": "Закрыть окно", "login.open": "Войти", "login.kicker": "Вход", "login.title": "Вход пользователя", "login.copy": "Зарегистрированные пользователи могут войти по телефону или email.", "login.account": "Телефон или email", "login.accountPlaceholder": "Введите телефон или email", "login.password": "Пароль", "login.passwordPlaceholder": "Введите пароль", "login.remember": "Запомнить меня", "login.forgot": "Восстановить пароль", "login.submit": "Войти", "login.success": "заявка на вход получена.", "login.registerLink": "Зарегистрироваться", "login.close": "Закрыть окно",
+        "nav.services": "Услуги", "nav.rooms": "Комнаты", "nav.schedule": "Расписание", "nav.team": "Специалисты", "nav.contact": "Контакты",
+        "hero.eyebrow": "Восстановление после родов и уход за новорожденным", "hero.title": "Спокойный уход для мамы и малыша", "hero.copy": "Профессиональные медсестры, консультации врача, питательное питание, ежедневный уход за новорожденным и отдых для мамы в одном месте.", "hero.book": "Записаться", "hero.viewServices": "Смотреть услуги",
+        "quick.care": "Сестринский контроль", "quick.days": "Пакеты по дням", "quick.consult": "Индивидуальная консультация", "quick.meals": "Сбалансированное питание каждый день",
+        "intro.kicker": "Наша среда", "intro.title": "Спокойный отдых, надежный уход и семейная атмосфера", "intro.copy": "Мандах Нярайн Сувилал - эх, нярайд зориулсан сувилал.",
+        "services.kicker": "Услуги", "services.title": "Все необходимое для мамы и малыша", "services.recovery.title": "Восстановление мамы", "services.recovery.copy": "Отдых, теплый уход, легкие упражнения и консультации по питанию каждый день.", "services.baby.title": "Уход за новорожденным", "services.baby.copy": "Купание, уход за пупком, контроль веса и поддержка режима сна профессиональной командой.", "services.feeding.title": "Консультация по грудному вскармливанию", "services.feeding.copy": "Помощь с положением при кормлении, лактацией и комфортом мамы.", "services.support.title": "Психологическая поддержка", "services.support.copy": "Спокойные консультации по послеродовым эмоциям и участию семьи.",
+        "rooms.kicker": "Выбор комнат", "rooms.title": "Чистые, уютные и тихие комнаты для отдыха", "rooms.family.title": "Семейная комната", "rooms.family.copy": "Комната для мамы, малыша и сопровождающего с отдельным санузлом.", "rooms.family.tag": "Пакет на 7 дней", "rooms.standard.title": "Стандартная комната", "rooms.standard.copy": "Тихая комната для одной мамы и одного новорожденного.", "rooms.deluxe.title": "Делюкс комната", "rooms.deluxe.copy": "Больше пространства и небольшая зона для гостя.", "rooms.day.title": "Дневной уход", "rooms.day.copy": "Дневной осмотр, консультация и пакет ухода за новорожденным.",
+        "schedule.kicker": "Дневной режим", "schedule.title": "Отдых для мамы и стабильный режим для малыша", "schedule.morning.title": "Утренний осмотр", "schedule.morning.copy": "Проверяем давление и состояние мамы, вес и цвет кожи малыша.", "schedule.baby.title": "Уход за новорожденным", "schedule.baby.copy": "Купание, обработка пупка, одежда и рекомендации по безопасному сну.", "schedule.recovery.title": "Восстановление мамы", "schedule.recovery.copy": "Легкая растяжка, время отдыха, питание и советы по кормлению.", "schedule.evening.title": "Вечерний контроль", "schedule.evening.copy": "Проверяем сон малыша и условия отдыха мамы для спокойного вечера.",
+        "team.kicker": "Наша команда", "team.title": "Совместная забота врача, акушерки и медсестры", "team.doctor": "Акушер-гинеколог", "team.nurse": "Медсестра новорожденных", "team.consultant": "Консультант по грудному вскармливанию",
+        "packages.kicker": "Стоимость", "packages.title": "Стоимость 1 дня: 280,000₮", "packages.one.title": "1 день", "packages.one.copy": "Базовая дневная стоимость проживания мамы и малыша.", "packages.five.title": "5 дней", "packages.five.copy": "Короткий послеродовой отдых и основной уход.", "packages.seven.title": "7 дней", "packages.seven.copy": "Удобный пакет для восстановления мамы и полного ухода за малышом.", "packages.fourteen.title": "14 дней", "packages.fourteen.copy": "Длительный отдых, регулярный контроль и семейные консультации.", "packages.thirty.title": "30 дней", "packages.thirty.copy": "Полный месяц отдыха с регулярным наблюдением.", "packages.more": "Подробнее", "packages.detail.kicker": "Детали пакета", "packages.detail.close": "Закрыть окно",
+        "contact.kicker": "Контакты", "contact.title": "Отправить заявку на запись", "contact.copy": "Оставьте заявку, и мы свяжемся с вами в рабочее время, чтобы рассказать о наличии комнат и подходящих пакетах.", "contact.phoneLabel": "Телефон:", "contact.addressLabel": "Адрес:", "contact.address": "район Хан-Уул, Улан-Батор", "contact.hoursLabel": "Время работы:", "contact.hours": "Каждый день 08:00-21:00", "registration.open": "Регистрация", "registration.kicker": "Регистрация", "registration.title": "Данные для регистрации", "registration.copy": "Оставьте свои данные, и мы подтвердим наличие комнаты и подходящий пакет.", "registration.close": "Закрыть окно",
+        "form.name": "Ваше имя", "form.namePlaceholder": "Введите имя", "form.phone": "Номер телефона", "form.phonePlaceholder": "Например: 99112233", "form.package": "Интересующий пакет", "form.optionDefault": "Выбрать", "form.packageOne": "1 день - 280,000₮", "form.packageFive": "5 дней - 1,400,000₮", "form.packageSeven": "7 дней - 1,960,000₮", "form.packageFourteen": "14 дней - 3,920,000₮", "form.packageThirty": "30 дней - 8,400,000₮", "form.language": "Язык общения", "form.message": "Дополнительная информация", "form.messagePlaceholder": "Дата родов, желаемые даты проживания и т.д.", "form.submit": "Отправить заявку", "form.success": "мы получили вашу заявку. Скоро свяжемся с вами.",
+        "footer.copy": "© 2026 Мандах Нярайн Сувилал.", "footer.top": "Наверх", "nav.open": "Открыть меню", "nav.close": "Закрыть меню"
+      },
+      zh: {
+        "brand.name": "Мандах Нярайн", "brand.type": "Сувилал", "language.label": "选择语言", "userMenu.kicker": "用户", "userMenu.title": "用户菜单", "userMenu.copy": "您已登录。可在此进入预约、价格和用户操作。", "userMenu.chatTitle": "与医生聊天", "userMenu.chatCopy": "从个人资料向医生发送消息。", "userMenu.bookingTitle": "预约护理", "userMenu.bookingCopy": "打开护理预约表。", "userMenu.pricingTitle": "查看价格", "userMenu.pricingCopy": "查看1、5、7、14、30天价格。", "userMenu.contactTitle": "联系", "userMenu.contactCopy": "前往电话、地址和营业时间。", "userMenu.logoutTitle": "退出", "userMenu.logoutCopy": "关闭用户菜单。", "userMenu.close": "关闭窗口", "signup.open": "Sign up", "signup.kicker": "Sign up", "signup.title": "创建用户账号", "signup.copy": "请输入信息来创建用户账号。", "signup.name": "您的姓名", "signup.namePlaceholder": "请输入姓名", "signup.account": "电话或邮箱", "signup.accountPlaceholder": "请输入电话或邮箱", "signup.password": "密码", "signup.passwordPlaceholder": "请输入密码", "signup.confirm": "确认密码", "signup.confirmPlaceholder": "请再次输入密码", "signup.submit": "Sign up", "signup.loginLink": "返回登录", "signup.success": "您的用户注册已创建。", "signup.close": "关闭窗口", "login.open": "登录", "login.kicker": "登录", "login.title": "用户登录", "login.copy": "已注册用户可使用电话或邮箱登录。", "login.account": "电话或邮箱", "login.accountPlaceholder": "请输入电话或邮箱", "login.password": "密码", "login.passwordPlaceholder": "请输入密码", "login.remember": "记住我", "login.forgot": "找回密码", "login.submit": "登录", "login.success": "登录请求已收到。", "login.registerLink": "注册", "login.close": "关闭窗口",
+        "nav.services": "服务", "nav.rooms": "房间", "nav.schedule": "日程", "nav.team": "专家", "nav.contact": "联系",
+        "hero.eyebrow": "产后恢复与新生儿护理", "hero.title": "给妈妈和宝宝的安静护理环境", "hero.copy": "专业护士、医生建议、营养餐、每日新生儿护理和妈妈休息恢复，一站式提供。", "hero.book": "预约", "hero.viewServices": "查看服务",
+        "quick.care": "24小时护理", "quick.days": "天数套餐", "quick.consult": "一对一咨询", "quick.meals": "每日均衡餐",
+        "intro.kicker": "我们的环境", "intro.title": "安静休息、可靠护理、亲近家庭的氛围", "intro.copy": "Мандах Нярайн Сувилал - эх, нярайд зориулсан сувилал.",
+        "services.kicker": "服务", "services.title": "妈妈和宝宝需要的全面支持", "services.recovery.title": "妈妈恢复", "services.recovery.copy": "每天结合休息、温热护理、轻柔运动和营养建议。", "services.baby.title": "新生儿护理", "services.baby.copy": "洗澡、脐带护理、体重监测和睡眠节奏支持。", "services.feeding.title": "母乳喂养咨询", "services.feeding.copy": "帮助喂养姿势、乳量和妈妈舒适度。", "services.support.title": "心理支持", "services.support.copy": "为产后情绪变化和家庭参与提供温和建议。",
+        "rooms.kicker": "房间选择", "rooms.title": "干净、舒适、安静的休息房间", "rooms.family.title": "家庭房", "rooms.family.copy": "妈妈、宝宝和陪护可共同入住，配有独立卫生间。", "rooms.family.tag": "7天套餐", "rooms.standard.title": "标准房", "rooms.standard.copy": "适合一位妈妈和一位新生儿的安静房间。", "rooms.deluxe.title": "豪华房", "rooms.deluxe.copy": "空间更大，并有小型会客区。", "rooms.day.title": "日间护理", "rooms.day.copy": "日间检查、咨询和新生儿护理套餐。",
+        "schedule.kicker": "每日安排", "schedule.title": "让妈妈休息，让宝宝建立稳定节奏", "schedule.morning.title": "早晨检查", "schedule.morning.copy": "检查妈妈血压和身体情况，以及宝宝体重和皮肤颜色。", "schedule.baby.title": "新生儿护理", "schedule.baby.copy": "洗澡、脐带清洁、穿衣和睡眠环境建议。", "schedule.recovery.title": "妈妈恢复", "schedule.recovery.copy": "轻柔拉伸、休息时间、营养和母乳喂养建议。", "schedule.evening.title": "晚间检查", "schedule.evening.copy": "检查宝宝睡眠节奏和妈妈休息条件。",
+        "team.kicker": "我们的团队", "team.title": "医生、助产士和护士共同护理", "team.doctor": "妇产科医生", "team.nurse": "新生儿护士", "team.consultant": "母乳喂养顾问",
+        "packages.kicker": "价格", "packages.title": "1天费用 280,000₮", "packages.one.title": "1天", "packages.one.copy": "妈妈和宝宝入住的基础日费。", "packages.five.title": "5天", "packages.five.copy": "短期产后休息和基础护理。", "packages.seven.title": "7天", "packages.seven.copy": "适合妈妈恢复和新生儿全面护理的套餐。", "packages.fourteen.title": "14天", "packages.fourteen.copy": "长期休息、定期监测和家庭咨询。", "packages.thirty.title": "30天", "packages.thirty.copy": "一个月休养与定期护理套餐。", "packages.more": "详情", "packages.detail.kicker": "套餐详情", "packages.detail.close": "关闭窗口",
+        "contact.kicker": "联系", "contact.title": "发送预约申请", "contact.copy": "请留下您的申请，我们会在工作时间联系您，说明房间情况和合适套餐。", "contact.phoneLabel": "电话：", "contact.addressLabel": "地址：", "contact.address": "乌兰巴托汗乌拉区", "contact.hoursLabel": "营业时间：", "contact.hours": "每天 08:00-21:00", "registration.open": "登记", "registration.kicker": "登记", "registration.title": "登记信息", "registration.copy": "请留下您的信息，我们会确认房间情况和合适套餐。", "registration.close": "关闭窗口",
+        "form.name": "您的姓名", "form.namePlaceholder": "请输入姓名", "form.phone": "电话号码", "form.phonePlaceholder": "例如：99112233", "form.package": "感兴趣的套餐", "form.optionDefault": "选择", "form.packageOne": "1天 - 280,000₮", "form.packageFive": "5天 - 1,400,000₮", "form.packageSeven": "7天 - 1,960,000₮", "form.packageFourteen": "14天 - 3,920,000₮", "form.packageThirty": "30天 - 8,400,000₮", "form.language": "沟通语言", "form.message": "补充信息", "form.messagePlaceholder": "预产期、入住日期等", "form.submit": "发送申请", "form.success": "我们已收到您的申请，会尽快联系您。",
+        "footer.copy": "© 2026 Мандах Нярайн Сувилал.", "footer.top": "返回顶部", "nav.open": "打开菜单", "nav.close": "关闭菜单"
+      }
+    };
+
+    const header = document.querySelector("[data-header]");
+    const navToggle = document.querySelector("[data-nav-toggle]");
+    const nav = document.querySelector("[data-nav]");
+    const heroPrevButton = document.querySelector("[data-hero-prev]");
+    const heroNextButton = document.querySelector("[data-hero-next]");
+    const authGuestButtons = document.querySelectorAll("[data-auth-guest]");
+    const headerUser = document.querySelector("[data-header-user]");
+    const headerAvatar = document.querySelector("[data-header-avatar]");
+    const headerAccount = document.querySelector("[data-header-account]");
+    const profileLink = document.querySelector("[data-profile-link]");
+    const logoutButton = document.querySelector("[data-logout]");
+    const bookingForm = document.querySelector("[data-booking-form]");
+    const formNote = document.querySelector("[data-form-note]");
+    const userMenuModal = document.querySelector("[data-user-menu-modal]");
+    const userMenuAccount = document.querySelector("[data-user-menu-account]");
+    const closeUserMenuButtons = document.querySelectorAll("[data-close-user-menu]");
+    const userMenuProfile = document.querySelector("[data-user-menu-profile]");
+    const userMenuChat = document.querySelector("[data-user-menu-chat]");
+    const userMenuRegister = document.querySelector("[data-user-menu-register]");
+    const userMenuPricing = document.querySelector("[data-user-menu-pricing]");
+    const userMenuContact = document.querySelector("[data-user-menu-contact]");
+    const userMenuLogout = document.querySelector("[data-user-menu-logout]");
+    const loginForm = document.querySelector("[data-login-form]");
+    const loginNote = document.querySelector("[data-login-note]");
+    const signupForm = document.querySelector("[data-signup-form]");
+    const signupNote = document.querySelector("[data-signup-note]");
+    const loginModal = document.querySelector("[data-login-modal]");
+    const signupModal = document.querySelector("[data-signup-modal]");
+    const openLoginButtons = document.querySelectorAll("[data-open-login]");
+    const closeLoginButtons = document.querySelectorAll("[data-close-login]");
+    const openSignupButtons = document.querySelectorAll("[data-open-signup]");
+    const closeSignupButtons = document.querySelectorAll("[data-close-signup]");
+    const registrationModal = document.querySelector("[data-registration-modal]");
+    const openRegistrationButtons = document.querySelectorAll("[data-open-registration]");
+    const closeRegistrationButtons = document.querySelectorAll("[data-close-registration]");
+    const packageModal = document.querySelector("[data-package-modal]");
+    const packageCards = document.querySelectorAll("[data-package-card]");
+    const closePackageButtons = document.querySelectorAll("[data-close-package]");
+    const packageTitle = document.querySelector("[data-package-title]");
+    const packagePrice = document.querySelector("[data-package-price]");
+    const packageCopy = document.querySelector("[data-package-copy]");
+    const packageList = document.querySelector("[data-package-list]");
+    const languageSelect = document.querySelector("[data-language-select]");
+    const themeToggle = document.querySelector("[data-theme-toggle]");
+    const themeIcon = document.querySelector("[data-theme-icon]");
+    const themeLabel = document.querySelector("[data-theme-label]");
+    const preferredLanguage = document.querySelector("[data-preferred-language]");
+    const adminToolbar = document.querySelector("[data-admin-toolbar]");
+    const adminEditButton = document.querySelector("[data-admin-edit]");
+    const adminSaveButton = document.querySelector("[data-admin-save]");
+    const adminCancelButton = document.querySelector("[data-admin-cancel]");
+    const adminStatus = document.querySelector("[data-admin-status]");
+    const adminEditableSelector = "[data-i18n], [data-admin-field]";
+    const bookingStorageKey = "nursery-booking-requests";
+
+
+    const getInitials = (value) => {
+      const text = String(value || "Мандах Нярайн").trim();
+      return text.split(/\s+/).slice(0, 2).map((part) => part[0] || "").join("").toUpperCase() || "МН";
+    };
+
+    const readProfilePage = () => {
+      try {
+        return JSON.parse(localStorage.getItem("nursery-profile-page") || "{}");
+      } catch (error) {
+        return {};
+      }
+    };
+
+    const readBookingRequests = () => {
+      try {
+        const requests = JSON.parse(localStorage.getItem(bookingStorageKey) || "[]");
+        return Array.isArray(requests) ? requests : [];
+      } catch (error) {
+        return [];
+      }
+    };
+
+    const writeBookingRequests = (requests) => {
+      try {
+        localStorage.setItem(bookingStorageKey, JSON.stringify(requests));
+      } catch (error) {}
+    };
+
+    const renderHeaderAvatar = (profile, account) => {
+      headerAvatar.innerHTML = "";
+      if (profile.photo) {
+        const image = document.createElement("img");
+        image.src = profile.photo;
+        image.alt = "Profile";
+        headerAvatar.appendChild(image);
+      } else {
+        headerAvatar.textContent = getInitials(profile.name || account);
+      }
+    };
+
+    const updateAuthState = () => {
+      const loggedIn = localStorage.getItem("nursery-logged-in") === "true";
+      const isAdmin = localStorage.getItem("nursery-admin-logged-in") === "true";
+      const isDoctor = localStorage.getItem("nursery-doctor-logged-in") === "true";
+      const isCook = localStorage.getItem("nursery-cook-logged-in") === "true";
+      const account = localStorage.getItem("nursery-current-account") || "Profile";
+      const profile = readProfilePage();
+      authGuestButtons.forEach((button) => {
+        button.hidden = loggedIn;
+      });
+      headerUser.hidden = !loggedIn;
+      if (adminToolbar) adminToolbar.hidden = !(loggedIn && isAdmin);
+      if (loggedIn) {
+        if (isAdmin) {
+          headerAccount.textContent = "Admin";
+          headerAvatar.innerHTML = "";
+          headerAvatar.textContent = "AD";
+          if (profileLink) profileLink.href = "admin.html";
+        } else if (isDoctor) {
+          headerAccount.textContent = "Эмч";
+          headerAvatar.innerHTML = "";
+          headerAvatar.textContent = "ЭМ";
+          if (profileLink) profileLink.href = "doctor.html";
+        } else if (isCook) {
+          headerAccount.textContent = "Тогооч";
+          headerAvatar.innerHTML = "";
+          headerAvatar.textContent = "ТГ";
+          if (profileLink) profileLink.href = "cook.html";
+        } else {
+          headerAccount.textContent = profile.name || account;
+          renderHeaderAvatar(profile, account);
+          if (profileLink) profileLink.href = "profile.html";
+        }
+      }
+    };
+
+    const logout = () => {
+      try {
+        localStorage.removeItem("nursery-logged-in");
+        localStorage.removeItem("nursery-admin-logged-in");
+        localStorage.removeItem("nursery-doctor-logged-in");
+        localStorage.removeItem("nursery-cook-logged-in");
+        localStorage.removeItem("nursery-current-account");
+      } catch (error) {}
+      updateAuthState();
+    };
+
+    const readSiteSettings = () => {
+      try {
+        const settings = JSON.parse(localStorage.getItem("nursery-site-settings") || "{}");
+        if (!settings.roomImage || String(settings.roomImage).includes("photo-1631049307264")) {
+          settings.roomImage = "assets/room-photo.png";
+        }
+        return settings;
+      } catch (error) {
+        return { roomImage: "assets/room-photo.png" };
+      }
+    };
+
+    const writeSiteSettings = (settings) => {
+      try {
+        localStorage.setItem("nursery-site-settings", JSON.stringify(settings));
+      } catch (error) {}
+    };
+
+    let heroSlideTimer;
+    let heroSlides = [];
+    let activeHeroSlide = 0;
+
+    const normalizeSlides = (settings) => {
+      if (Array.isArray(settings.slides) && settings.slides.length) return settings.slides.filter((slide) => slide && slide.image);
+      if (settings.heroImage) {
+        return [{ image: settings.heroImage, title: settings.heroTitle || "", copy: settings.heroCopy || "" }];
+      }
+      return [];
+    };
+
+    const setHeroSlide = (slide) => {
+      const hero = document.querySelector(".hero");
+      const heroPhoto = document.querySelector("[data-hero-photo]");
+      const heroTitle = document.querySelector('[data-i18n="hero.title"]');
+      const heroCopy = document.querySelector('[data-i18n="hero.copy"]');
+      if (hero && slide.image) {
+        hero.style.backgroundImage = `linear-gradient(90deg, rgba(18, 42, 38, 0.84), rgba(18, 42, 38, 0.52) 46%, rgba(18, 42, 38, 0.18)), url("${slide.image}")`;
+      }
+      if (heroPhoto && slide.image) heroPhoto.src = slide.image;
+      if (slide.title && heroTitle) heroTitle.textContent = slide.title;
+      if (slide.copy && heroCopy) heroCopy.textContent = slide.copy;
+      if (typeof applyAdminContent === "function") applyAdminContent(readSiteSettings());
+    };
+
+    const startHeroTimer = (settings) => {
+      window.clearInterval(heroSlideTimer);
+      if (heroSlides.length > 1) {
+        heroSlideTimer = window.setInterval(() => {
+          showHeroSlide(activeHeroSlide + 1, false);
+        }, Number(settings.slideInterval || 5200));
+      }
+    };
+
+    const showHeroSlide = (index, restartTimer = true) => {
+      if (!heroSlides.length) return;
+      activeHeroSlide = (index + heroSlides.length) % heroSlides.length;
+      setHeroSlide(heroSlides[activeHeroSlide]);
+      if (restartTimer) startHeroTimer(readSiteSettings());
+    };
+
+    const applyAdminContent = (settings) => {
+      const content = settings.content || {};
+      const fields = settings.fields || {};
+
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        const value = content[element.dataset.i18n];
+        if (typeof value === "string" && value.trim()) element.textContent = value;
+      });
+
+      document.querySelectorAll("[data-admin-field]").forEach((element) => {
+        const value = fields[element.dataset.adminField];
+        if (typeof value === "string" && value.trim()) element.textContent = value;
+      });
+
+      document.querySelectorAll("[data-package-option]").forEach((option) => {
+        const key = option.dataset.packageOption;
+        const title = content[`packages.${key}.title`] || (translations.mn[`packages.${key}.title`] || option.textContent.split("-")[0].trim());
+        const price = fields[`packages.${key}.price`];
+        if (price) option.textContent = `${title} - ${price}`;
+      });
+
+      const roomImage = document.querySelector("[data-room-image]");
+      if (roomImage && settings.roomImage) roomImage.src = settings.roomImage;
+    };
+
+    const applySiteSettings = () => {
+      const settings = readSiteSettings();
+      heroSlides = normalizeSlides(settings);
+      activeHeroSlide = 0;
+      const contactCopy = document.querySelector('[data-i18n="contact.copy"]');
+      const sitePhone = document.querySelector("[data-site-phone]");
+      const siteAddress = document.querySelector('[data-i18n="contact.address"]');
+      const siteHours = document.querySelector('[data-i18n="contact.hours"]');
+
+      window.clearInterval(heroSlideTimer);
+      if (heroSlides.length) {
+        setHeroSlide(heroSlides[activeHeroSlide]);
+        startHeroTimer(settings);
+      }
+
+      if (settings.contactCopy && contactCopy) contactCopy.textContent = settings.contactCopy;
+      if (settings.phone && sitePhone) sitePhone.textContent = settings.phone;
+      if (settings.address && siteAddress) siteAddress.textContent = settings.address;
+      if (settings.hours && siteHours) siteHours.textContent = settings.hours;
+      applyAdminContent(settings);
+    };
+    const themeText = {
+      mn: { day: "Өдөр", night: "Шөнө", toDay: "Өдрийн горим", toNight: "Шөнийн горим" },
+      en: { day: "Day", night: "Night", toDay: "Switch to day mode", toNight: "Switch to night mode" },
+      ru: { day: "День", night: "Ночь", toDay: "Включить дневной режим", toNight: "Включить ночной режим" },
+      zh: { day: "白天", night: "夜间", toDay: "切换到白天模式", toNight: "切换到夜间模式" }
+    };
+
+    const packageDetails = {
+      mn: {
+        one: { title: "1 хоног", price: "280,000₮", copy: "Нэг өдрийн суурь асаргаа, эх нярай хамт амрахад тохиромжтой.", items: ["Ээж, нярай хамт байрлах өрөө", "Өдрийн 3 удаагийн шим тэжээлтэй хоол", "Нярайн жин, арьс, унтах хэмнэлийн хяналт", "Эхийн амралт, хөхүүл зөвлөгөө"] },
+        five: { title: "5 хоног", price: "1,400,000₮", copy: "Төрсний дараах эхний өдрүүдэд амрах, нярайн асаргааг тогтворжуулах богино багц.", items: ["5 хоногийн байрлах үйлчилгээ", "Өдөр тутмын сувилахуйн хяналт", "Хүй арчилгаа, усанд оруулах зөвлөгөө", "Ээжийн хооллолт, амралтын зөвлөмж"] },
+        seven: { title: "7 хоног", price: "1,960,000₮", copy: "Эхийн нөхөн сэргэлт, нярайн бүрэн асаргаанд тэнцвэртэй долоо хоногийн багц.", items: ["7 хоногийн байр, хоол", "Эмч, сувилагчийн тогтмол ажиглалт", "Хөхүүл байрлал, сүүний гарцын зөвлөгөө", "Гэртээ гарахын өмнөх асаргааны заавар"] },
+        fourteen: { title: "14 хоног", price: "3,920,000₮", copy: "Илүү тайван амрах, нярайн хэмнэлийг тогтвортой болгох урт хугацааны багц.", items: ["14 хоногийн бүрэн байрлах үйлчилгээ", "Эхийн биеийн байдал, сэтгэлзүйн дэмжлэг", "Нярайн өдөр тутмын асаргаа, жингийн хяналт", "Гэр бүлийн оролцоотой зөвлөгөө"] },
+        thirty: { title: "30 хоног", price: "8,400,000₮", copy: "Сарын турш тогтмол хяналттай амарч, эх нярай хоёрын хэмнэлийг бүрэн тогтоох багц.", items: ["30 хоногийн байр, хоол, сувилахуйн үйлчилгээ", "Эмчийн төлөвлөгөөт үзлэг, сувилагчийн өдөр тутмын хяналт", "Хөхүүл, хооллолт, нярайн унтах хэмнэлийн зөвлөгөө", "Гэртээ шилжих үеийн дэлгэрэнгүй зөвлөмж"] }
+      },
+      en: {
+        one: { title: "1 day", price: "280,000₮", copy: "A basic one-day stay for mother and newborn recovery.", items: ["Room for mother and baby", "Three balanced meals", "Newborn weight, skin, and sleep rhythm checks", "Rest and breastfeeding guidance"] },
+        five: { title: "5 days", price: "1,400,000₮", copy: "A short package for early postpartum rest and newborn care routines.", items: ["5-day stay", "Daily nursing supervision", "Cord care and bathing guidance", "Nutrition and rest recommendations"] },
+        seven: { title: "7 days", price: "1,960,000₮", copy: "A balanced week-long package for recovery and full newborn care.", items: ["7-day room and meals", "Regular doctor and nurse observation", "Breastfeeding position and milk supply guidance", "Home-care instructions before discharge"] },
+        fourteen: { title: "14 days", price: "3,920,000₮", copy: "A longer package for calmer recovery and stable newborn routines.", items: ["14-day full stay", "Mother's recovery and emotional support", "Daily newborn care and weight tracking", "Family guidance sessions"] },
+        thirty: { title: "30 days", price: "8,400,000₮", copy: "A full month of monitored rest to establish healthy routines for mother and baby.", items: ["30-day room, meals, and nursing care", "Planned doctor checks and daily nurse supervision", "Breastfeeding, nutrition, and sleep rhythm guidance", "Detailed transition plan for home"] }
+      },
+      ru: {
+        one: { title: "1 день", price: "280,000₮", copy: "Базовый однодневный уход для мамы и малыша.", items: ["Комната для мамы и ребенка", "Трехразовое сбалансированное питание", "Контроль веса, кожи и сна новорожденного", "Отдых и консультация по грудному вскармливанию"] },
+        five: { title: "5 дней", price: "1,400,000₮", copy: "Короткий пакет для отдыха после родов и налаживания ухода за малышом.", items: ["Проживание 5 дней", "Ежедневный сестринский контроль", "Уход за пуповиной и консультация по купанию", "Рекомендации по питанию и отдыху"] },
+        seven: { title: "7 дней", price: "1,960,000₮", copy: "Сбалансированный недельный пакет для восстановления и полного ухода.", items: ["Проживание и питание 7 дней", "Регулярное наблюдение врача и медсестры", "Консультация по прикладыванию и лактации", "Инструкции по уходу дома"] },
+        fourteen: { title: "14 дней", price: "3,920,000₮", copy: "Длительный пакет для спокойного восстановления и режима новорожденного.", items: ["Полное проживание 14 дней", "Поддержка восстановления и эмоционального состояния мамы", "Ежедневный уход и контроль веса малыша", "Семейные консультации"] },
+        thirty: { title: "30 дней", price: "8,400,000₮", copy: "Месяц отдыха под наблюдением для устойчивого режима мамы и малыша.", items: ["30 дней проживания, питания и сестринского ухода", "Плановые осмотры врача и ежедневный контроль", "Консультации по кормлению, питанию и сну", "Подробные рекомендации перед возвращением домой"] }
+      },
+      zh: {
+        one: { title: "1天", price: "280,000₮", copy: "适合妈妈和宝宝的一天基础护理。", items: ["妈妈和宝宝同住", "每日三餐营养餐", "新生儿体重、皮肤和睡眠观察", "休息与母乳喂养指导"] },
+        five: { title: "5天", price: "1,400,000₮", copy: "适合产后初期休息和建立护理节奏的短期套餐。", items: ["5天住宿", "每日护理观察", "脐带护理和洗澡指导", "营养和休息建议"] },
+        seven: { title: "7天", price: "1,960,000₮", copy: "适合产后恢复和新生儿全面护理的一周套餐。", items: ["7天住宿和餐食", "医生和护士定期观察", "哺乳姿势和奶量指导", "回家前护理说明"] },
+        fourteen: { title: "14天", price: "3,920,000₮", copy: "适合更充分休息并稳定宝宝作息的长期套餐。", items: ["14天完整住宿", "妈妈恢复和情绪支持", "每日新生儿护理和体重记录", "家庭护理咨询"] },
+        thirty: { title: "30天", price: "8,400,000₮", copy: "一个月持续观察与休养，帮助妈妈和宝宝建立稳定节奏。", items: ["30天住宿、餐食和护理", "医生计划检查和护士每日观察", "哺乳、营养和睡眠节奏指导", "回家过渡详细建议"] }
+      }
+    };
+
+    let activePackageKey = "";
+
+    const updateHeader = () => {
+      header.classList.toggle("is-scrolled", window.scrollY > 24);
+    };
+
+    const getSavedLanguage = () => {
+      try {
+        return localStorage.getItem("nursery-language") || "mn";
+      } catch (error) {
+        return "mn";
+      }
+    };
+
+    const saveLanguage = (language) => {
+      try {
+        localStorage.setItem("nursery-language", language);
+      } catch (error) {}
+    };
+
+    const getSavedTheme = () => {
+      try {
+        return localStorage.getItem("nursery-theme") || "day";
+      } catch (error) {
+        return "day";
+      }
+    };
+
+    const saveTheme = (theme) => {
+      try {
+        localStorage.setItem("nursery-theme", theme);
+      } catch (error) {}
+    };
+
+    const updateThemeToggle = (theme) => {
+      const language = languageSelect.value || "mn";
+      const labels = themeText[language] || themeText.mn;
+      const isNight = theme === "night";
+      themeIcon.textContent = isNight ? "☀" : "☾";
+      themeLabel.textContent = isNight ? labels.day : labels.night;
+      themeToggle.setAttribute("aria-label", isNight ? labels.toDay : labels.toNight);
+    };
+
+    const applyTheme = (theme) => {
+      const nextTheme = theme === "night" ? "night" : "day";
+      document.body.dataset.theme = nextTheme;
+      updateThemeToggle(nextTheme);
+      saveTheme(nextTheme);
+    };
+
+    const isAdminEditableElement = (element) => {
+      if (!element || element.closest("[data-admin-toolbar]")) return false;
+      if (element.classList.contains("visually-hidden")) return false;
+      if (!element.getClientRects().length) return false;
+      return !["OPTION", "SELECT", "INPUT", "TEXTAREA"].includes(element.tagName);
+    };
+
+    const getAdminEditableElements = () => {
+      return Array.from(document.querySelectorAll(adminEditableSelector)).filter(isAdminEditableElement);
+    };
+
+    const setAdminEditing = (isEditing) => {
+      document.body.classList.toggle("admin-editing", isEditing);
+      getAdminEditableElements().forEach((element) => {
+        if (isEditing) {
+          element.setAttribute("contenteditable", "true");
+          element.setAttribute("spellcheck", "false");
+        } else {
+          element.removeAttribute("contenteditable");
+          element.removeAttribute("spellcheck");
+        }
+      });
+      adminEditButton.hidden = isEditing;
+      adminSaveButton.hidden = !isEditing;
+      adminCancelButton.hidden = !isEditing;
+      if (!isEditing) window.getSelection()?.removeAllRanges();
+    };
+
+    const saveAdminEdits = () => {
+      const settings = readSiteSettings();
+      settings.content = settings.content || {};
+      settings.fields = settings.fields || {};
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        if (!isAdminEditableElement(element)) return;
+        settings.content[element.dataset.i18n] = element.textContent.trim();
+      });
+      document.querySelectorAll("[data-admin-field]").forEach((element) => {
+        if (!isAdminEditableElement(element)) return;
+        settings.fields[element.dataset.adminField] = element.textContent.trim();
+      });
+      writeSiteSettings(settings);
+      setAdminEditing(false);
+      applyLanguage(languageSelect.value || getSavedLanguage());
+      if (adminStatus) adminStatus.textContent = "Хадгалагдлаа";
+      window.setTimeout(() => {
+        if (adminStatus) adminStatus.textContent = "";
+      }, 1800);
+    };
+
+    const cancelAdminEdits = () => {
+      setAdminEditing(false);
+      applyLanguage(languageSelect.value || getSavedLanguage());
+      if (adminStatus) adminStatus.textContent = "Болилоо";
+      window.setTimeout(() => {
+        if (adminStatus) adminStatus.textContent = "";
+      }, 1400);
+    };
+
+    const renderPackageDetail = (key) => {
+      const language = languageSelect.value || getSavedLanguage();
+      const settings = readSiteSettings();
+      const content = settings.content || {};
+      const fields = settings.fields || {};
+      const base = (packageDetails[language] && packageDetails[language][key]) || packageDetails.mn[key] || packageDetails.mn.one;
+      const detail = {
+        ...base,
+        title: content[`packages.${key}.title`] || base.title,
+        copy: content[`packages.${key}.copy`] || base.copy,
+        price: fields[`packages.${key}.price`] || base.price,
+        items: (settings.packageItems && settings.packageItems[key] && settings.packageItems[key].length) ? settings.packageItems[key] : base.items
+      };
+      activePackageKey = key;
+      packageTitle.textContent = detail.title;
+      packagePrice.textContent = detail.price;
+      packageCopy.textContent = detail.copy;
+      packageList.innerHTML = "";
+      detail.items.forEach((item) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = item;
+        packageList.appendChild(listItem);
+      });
+    };
+
+    const openPackageDetail = (key) => {
+      closeUserMenu();
+      closeLogin();
+      closeSignup();
+      closeRegistration();
+      renderPackageDetail(key);
+      packageModal.classList.add("is-visible");
+      packageModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      const closeButton = packageModal.querySelector("[data-close-package]");
+      if (closeButton) closeButton.focus();
+    };
+
+    const closePackageDetail = () => {
+      packageModal.classList.remove("is-visible");
+      packageModal.setAttribute("aria-hidden", "true");
+      activePackageKey = "";
+      document.body.classList.remove("modal-open");
+    };
+
+    const openUserMenu = (account = "") => {
+      closeLogin();
+      closeSignup();
+      closeRegistration();
+      closePackageDetail();
+      if (userMenuAccount) userMenuAccount.textContent = account;
+      userMenuModal.classList.add("is-visible");
+      userMenuModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+    };
+
+    const closeUserMenu = () => {
+      userMenuModal.classList.remove("is-visible");
+      userMenuModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+    };
+
+    const openSignup = () => {
+      closeUserMenu();
+      closeLogin();
+      closeRegistration();
+      closePackageDetail();
+      signupModal.classList.add("is-visible");
+      signupModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      const firstInput = signupModal.querySelector("input");
+      if (firstInput) firstInput.focus();
+    };
+
+    const closeSignup = () => {
+      signupModal.classList.remove("is-visible");
+      signupModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+    };
+
+    const openLogin = () => {
+      closeUserMenu();
+      closeSignup();
+      closeRegistration();
+      closePackageDetail();
+      loginModal.classList.add("is-visible");
+      loginModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      const firstInput = loginModal.querySelector("input");
+      if (firstInput) firstInput.focus();
+    };
+
+    const closeLogin = () => {
+      loginModal.classList.remove("is-visible");
+      loginModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+    };
+
+    const openRegistration = () => {
+      closeUserMenu();
+      closeLogin();
+      closeSignup();
+      closePackageDetail();
+      registrationModal.classList.add("is-visible");
+      registrationModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      const firstInput = registrationModal.querySelector("input");
+      if (firstInput) firstInput.focus();
+    };
+
+    const closeRegistration = () => {
+      registrationModal.classList.remove("is-visible");
+      registrationModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+    };
+
+    const applyLanguage = (language) => {
+      const dict = translations[language] || translations.mn;
+      document.documentElement.lang = language;
+
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        const key = element.dataset.i18n;
+        element.textContent = dict[key] || translations.mn[key] || element.textContent;
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+        const key = element.dataset.i18nPlaceholder;
+        element.setAttribute("placeholder", dict[key] || translations.mn[key] || "");
+      });
+
+      languageSelect.value = language;
+      if (preferredLanguage) preferredLanguage.value = language;
+      navToggle.setAttribute("aria-label", header.classList.contains("is-open") ? dict["nav.close"] : dict["nav.open"]);
+      languageSelect.setAttribute("aria-label", dict["language.label"]);
+      closeRegistrationButtons.forEach((button) => button.setAttribute("aria-label", dict["registration.close"]));
+      closeUserMenuButtons.forEach((button) => button.setAttribute("aria-label", dict["userMenu.close"]));
+      closeLoginButtons.forEach((button) => button.setAttribute("aria-label", dict["login.close"]));
+      closeSignupButtons.forEach((button) => button.setAttribute("aria-label", dict["signup.close"]));
+      closePackageButtons.forEach((button) => button.setAttribute("aria-label", dict["packages.detail.close"] || dict["registration.close"]));
+      if (packageModal.classList.contains("is-visible") && activePackageKey) renderPackageDetail(activePackageKey);
+      updateThemeToggle(document.body.dataset.theme || getSavedTheme());
+      applySiteSettings();
+      saveLanguage(language);
+    };
+
+    navToggle.addEventListener("click", () => {
+      const language = languageSelect.value;
+      const dict = translations[language] || translations.mn;
+      const isOpen = header.classList.toggle("is-open");
+      navToggle.setAttribute("aria-label", isOpen ? dict["nav.close"] : dict["nav.open"]);
+    });
+
+    nav.addEventListener("click", (event) => {
+      if (event.target instanceof HTMLAnchorElement) {
+        const dict = translations[languageSelect.value] || translations.mn;
+        header.classList.remove("is-open");
+        navToggle.setAttribute("aria-label", dict["nav.open"]);
+      }
+    });
+
+    heroPrevButton.addEventListener("click", () => showHeroSlide(activeHeroSlide - 1));
+    heroNextButton.addEventListener("click", () => showHeroSlide(activeHeroSlide + 1));
+
+    logoutButton.addEventListener("click", logout);
+
+    languageSelect.addEventListener("change", () => {
+      applyLanguage(languageSelect.value);
+    });
+
+    themeToggle.addEventListener("click", () => {
+      const nextTheme = document.body.dataset.theme === "night" ? "day" : "night";
+      applyTheme(nextTheme);
+    });
+
+    adminEditButton.addEventListener("click", () => {
+      setAdminEditing(true);
+      if (adminStatus) adminStatus.textContent = "Засварлаж байна";
+    });
+
+    adminSaveButton.addEventListener("click", saveAdminEdits);
+    adminCancelButton.addEventListener("click", cancelAdminEdits);
+
+    document.addEventListener("click", (event) => {
+      if (!document.body.classList.contains("admin-editing")) return;
+      if (event.target.closest("[data-admin-toolbar]")) return;
+      if (event.target.closest("a, button, [role='button'], select, input, textarea")) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    }, true);
+
+    document.addEventListener("keydown", (event) => {
+      if (!document.body.classList.contains("admin-editing")) return;
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s") {
+        event.preventDefault();
+        saveAdminEdits();
+      }
+    });
+
+    closeUserMenuButtons.forEach((button) => {
+      button.addEventListener("click", closeUserMenu);
+    });
+
+    userMenuModal.addEventListener("click", (event) => {
+      if (event.target === userMenuModal) closeUserMenu();
+    });
+
+    userMenuProfile.addEventListener("click", () => {
+      const account = userMenuAccount ? userMenuAccount.textContent : "";
+      try {
+        localStorage.setItem("nursery-current-account", account);
+      } catch (error) {}
+      window.location.href = "profile.html";
+    });
+    userMenuChat.addEventListener("click", () => {
+      const account = userMenuAccount ? userMenuAccount.textContent : "";
+      try {
+        localStorage.setItem("nursery-current-account", account);
+      } catch (error) {}
+      window.location.href = "profile.html#profile-chat";
+    });
+    userMenuRegister.addEventListener("click", () => {
+      closeUserMenu();
+      openRegistration();
+    });
+
+    userMenuPricing.addEventListener("click", () => {
+      closeUserMenu();
+      document.querySelector("#packages")?.scrollIntoView({ behavior: "smooth" });
+    });
+
+    userMenuContact.addEventListener("click", () => {
+      closeUserMenu();
+      document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+    });
+
+    userMenuLogout.addEventListener("click", closeUserMenu);
+
+    openLoginButtons.forEach((button) => {
+      button.addEventListener("click", openLogin);
+    });
+
+    closeLoginButtons.forEach((button) => {
+      button.addEventListener("click", closeLogin);
+    });
+
+    openSignupButtons.forEach((button) => {
+      button.addEventListener("click", openSignup);
+    });
+
+    closeSignupButtons.forEach((button) => {
+      button.addEventListener("click", closeSignup);
+    });
+
+    loginModal.addEventListener("click", (event) => {
+      if (event.target === loginModal) closeLogin();
+    });
+
+    signupModal.addEventListener("click", (event) => {
+      if (event.target === signupModal) closeSignup();
+    });
+
+    openRegistrationButtons.forEach((button) => {
+      button.addEventListener("click", openRegistration);
+    });
+
+    closeRegistrationButtons.forEach((button) => {
+      button.addEventListener("click", closeRegistration);
+    });
+
+    registrationModal.addEventListener("click", (event) => {
+      if (event.target === registrationModal) closeRegistration();
+    });
+
+    packageCards.forEach((card) => {
+      card.addEventListener("click", () => {
+        if (document.body.classList.contains("admin-editing")) return;
+        openPackageDetail(card.dataset.packageKey || "one");
+      });
+      card.addEventListener("keydown", (event) => {
+        if (document.body.classList.contains("admin-editing")) return;
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openPackageDetail(card.dataset.packageKey || "one");
+        }
+      });
+    });
+
+    closePackageButtons.forEach((button) => {
+      button.addEventListener("click", closePackageDetail);
+    });
+
+    packageModal.addEventListener("click", (event) => {
+      if (event.target === packageModal) closePackageDetail();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && registrationModal.classList.contains("is-visible")) closeRegistration();
+      if (event.key === "Escape" && loginModal.classList.contains("is-visible")) closeLogin();
+      if (event.key === "Escape" && userMenuModal.classList.contains("is-visible")) closeUserMenu();
+      if (event.key === "Escape" && signupModal.classList.contains("is-visible")) closeSignup();
+      if (event.key === "Escape" && packageModal.classList.contains("is-visible")) closePackageDetail();
+    });
+
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const formData = new FormData(loginForm);
+      const account = String(formData.get("account") || "").trim();
+      const password = String(formData.get("password") || "");
+      const normalizedAccount = account.toLowerCase();
+      const language = languageSelect.value;
+      const dict = translations[language] || translations.mn;
+
+      if ((normalizedAccount === "admin" || normalizedAccount === "admin@mandah.mn") && password === "admin123") {
+        try {
+          localStorage.setItem("nursery-current-account", "admin@mandah.mn");
+          localStorage.setItem("nursery-admin-logged-in", "true");
+          localStorage.removeItem("nursery-doctor-logged-in");
+          localStorage.removeItem("nursery-cook-logged-in");
+          localStorage.setItem("nursery-logged-in", "true");
+        } catch (error) {}
+        loginForm.reset();
+        applyLanguage(language);
+        updateAuthState();
+        window.location.href = "admin.html";
+        return;
+      }
+
+      if ((normalizedAccount === "doctor" || normalizedAccount === "doctor@mandah.mn") && password === "doctor123") {
+        try {
+          localStorage.setItem("nursery-current-account", "doctor@mandah.mn");
+          localStorage.setItem("nursery-doctor-logged-in", "true");
+          localStorage.removeItem("nursery-admin-logged-in");
+          localStorage.removeItem("nursery-cook-logged-in");
+          localStorage.setItem("nursery-logged-in", "true");
+        } catch (error) {}
+        loginForm.reset();
+        applyLanguage(language);
+        updateAuthState();
+        window.location.href = "doctor.html";
+        return;
+      }
+
+      if ((normalizedAccount === "cook" || normalizedAccount === "cook@mandah.mn") && password === "cook123") {
+        try {
+          localStorage.setItem("nursery-current-account", "cook@mandah.mn");
+          localStorage.setItem("nursery-cook-logged-in", "true");
+          localStorage.removeItem("nursery-admin-logged-in");
+          localStorage.removeItem("nursery-doctor-logged-in");
+          localStorage.setItem("nursery-logged-in", "true");
+        } catch (error) {}
+        loginForm.reset();
+        applyLanguage(language);
+        updateAuthState();
+        window.location.href = "cook.html";
+        return;
+      }
+
+      loginNote.textContent = account + ", " + dict["login.success"];
+      try {
+        localStorage.removeItem("nursery-admin-logged-in");
+        localStorage.removeItem("nursery-doctor-logged-in");
+        localStorage.removeItem("nursery-cook-logged-in");
+        localStorage.setItem("nursery-current-account", account);
+        localStorage.setItem("nursery-logged-in", "true");
+      } catch (error) {}
+      loginForm.reset();
+      applyLanguage(language);
+      updateAuthState();
+      window.location.href = "profile.html";
+    });
+    signupForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const formData = new FormData(signupForm);
+      const name = String(formData.get("name") || "").trim();
+      const password = String(formData.get("password") || "");
+      const confirm = String(formData.get("confirm") || "");
+      const language = languageSelect.value;
+      const dict = translations[language] || translations.mn;
+      if (password !== confirm) {
+        signupNote.textContent = language === "en" ? "Passwords do not match." : language === "ru" ? "Пароли не совпадают." : language === "zh" ? "两次输入的密码不一致。" : "Нууц үг таарахгүй байна.";
+        return;
+      }
+      signupNote.textContent = name + ", " + dict["signup.success"];
+      signupForm.reset();
+      applyLanguage(language);
+    });
+
+    bookingForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const formData = new FormData(bookingForm);
+      const name = String(formData.get("name") || "").trim();
+      const phone = String(formData.get("phone") || "").trim();
+      const packageName = String(formData.get("package") || "").trim();
+      const preferredLang = String(formData.get("language") || languageSelect.value || "mn").trim();
+      const message = String(formData.get("message") || "").trim();
+      const language = languageSelect.value;
+      const dict = translations[language] || translations.mn;
+      const requests = readBookingRequests();
+      requests.unshift({
+        id: String(Date.now()),
+        name,
+        phone,
+        packageName,
+        preferredLanguage: preferredLang,
+        message,
+        status: "new",
+        createdAt: new Date().toISOString()
+      });
+      writeBookingRequests(requests);
+      formNote.textContent = name + ", " + dict["form.success"];
+      bookingForm.reset();
+      applyLanguage(language);
+    });
+
+    applyTheme(getSavedTheme());
+    applyLanguage(getSavedLanguage());
+    updateHeader();
+    updateAuthState();
+    applySiteSettings();
+    window.addEventListener("storage", () => {
+      updateAuthState();
+      applySiteSettings();
+    });
+    window.addEventListener("scroll", updateHeader, { passive: true });
+  </script>
+</body>
+</html>

@@ -1,0 +1,703 @@
+﻿<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Хэрэглэгчийн profile | Мандах Нярайн Сувилал</title>
+  <style>
+    :root {
+      --ink: #22312f;
+      --muted: #66736f;
+      --paper: #fffdf9;
+      --soft: #f5f0e8;
+      --mint: #d9eee6;
+      --teal: #1f6f67;
+      --rose: #d98f85;
+      --gold: #c09a55;
+      --line: rgba(34, 49, 47, 0.12);
+      --shadow: 0 22px 55px rgba(34, 49, 47, 0.14);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); line-height: 1.6; }
+    body[data-theme="night"] {
+      --ink: #edf6f2;
+      --muted: #b7c8c2;
+      --paper: #101918;
+      --soft: #172422;
+      --mint: #213d36;
+      --teal: #7bd1c4;
+      --rose: #eea49b;
+      --gold: #e0bf73;
+      --line: rgba(237, 246, 242, 0.16);
+      --shadow: 0 24px 62px rgba(0, 0, 0, 0.36);
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+
+    .profile-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px clamp(16px, 4vw, 54px);
+      background: rgba(255, 253, 249, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    body[data-theme="night"] .profile-header { background: rgba(16, 25, 24, 0.94); }
+
+    .brand { display: inline-flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(34, 49, 47, 0.14);
+      font-weight: 850;
+    }
+    .brand-mark img { width: 100%; height: 100%; object-fit: cover; }
+    .brand strong, .brand small { display: block; line-height: 1.1; }
+    .brand small { color: var(--muted); }
+
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .pill-button {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--ink);
+      padding: 0 14px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+    body[data-theme="night"] .pill-button { background: #172422; }
+    .pill-primary { background: var(--teal); color: #fff; border-color: transparent; }
+    body[data-theme="night"] .pill-primary { color: #071412; }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: clamp(36px, 6vw, 72px) 0;
+    }
+
+    .page-title {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .eyebrow { margin: 0; color: var(--gold); font-size: 13px; font-weight: 850; letter-spacing: 0.08em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(34px, 5vw, 58px); line-height: 1.04; letter-spacing: 0; }
+    .lead { max-width: 760px; margin: 0; color: var(--muted); font-size: 18px; }
+
+    .profile-layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    body[data-theme="night"] .panel { background: #172422; }
+
+    .summary-panel { padding: 28px; }
+    .avatar-wrap { display: grid; justify-items: center; gap: 16px; }
+    .avatar {
+      display: grid;
+      width: 164px;
+      height: 164px;
+      place-items: center;
+      overflow: hidden;
+      border: 4px solid var(--mint);
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--rose));
+      color: #fff;
+      font-size: 58px;
+      font-weight: 900;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .upload-label { cursor: pointer; }
+    .upload-label input { display: none; }
+
+    .summary-name { margin: 10px 0 0; text-align: center; font-size: 25px; line-height: 1.16; }
+    .summary-account { margin: 6px 0 0; text-align: center; color: var(--muted); word-break: break-word; }
+
+    .mini-stats {
+      display: grid;
+      gap: 10px;
+      margin-top: 24px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+    }
+    .mini-stats div { display: flex; justify-content: space-between; gap: 12px; }
+    .mini-stats span { color: var(--muted); }
+    .mini-stats strong { text-align: right; }
+
+    .form-panel { padding: clamp(22px, 4vw, 34px); }
+    .profile-form { display: grid; gap: 16px; }
+    .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    label { display: grid; gap: 8px; font-weight: 750; }
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 13px 14px;
+    }
+    textarea { resize: vertical; }
+    .form-note { min-height: 24px; margin: 0; color: var(--teal); font-weight: 800; }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .quick-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      padding: 18px;
+      font-weight: 850;
+      cursor: pointer;
+      text-align: left;
+    }
+    body[data-theme="night"] .quick-card { background: #101918; }
+    .quick-card span { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; font-weight: 650; }
+
+    .chat-panel {
+      display: grid;
+      gap: 16px;
+      margin-top: 18px;
+      padding: clamp(22px, 4vw, 34px);
+    }
+
+    .chat-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .chat-head h2 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.12;
+    }
+
+    .chat-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+
+    .chat-status {
+      display: inline-flex;
+      min-height: 34px;
+      align-items: center;
+      border-radius: 999px;
+      background: var(--mint);
+      color: var(--teal);
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .chat-log {
+      display: grid;
+      gap: 12px;
+      max-height: 360px;
+      overflow-y: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      padding: 14px;
+    }
+
+    .chat-empty {
+      margin: 0;
+      padding: 18px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .chat-message {
+      max-width: min(78%, 560px);
+      border-radius: 8px;
+      background: var(--soft);
+      padding: 12px 14px;
+    }
+
+    .chat-message.is-user {
+      justify-self: end;
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .chat-message.is-doctor {
+      justify-self: start;
+      background: var(--mint);
+      color: var(--ink);
+    }
+
+    .chat-message strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+
+    .chat-message p {
+      margin: 0;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .chat-message time {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      opacity: 0.74;
+    }
+
+    .chat-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .chat-form textarea {
+      min-height: 54px;
+      max-height: 140px;
+    }
+
+    @media (max-width: 880px) {
+      .profile-layout, .field-grid, .quick-actions { grid-template-columns: 1fr; }
+      .profile-header { align-items: flex-start; }
+      .header-actions { flex-wrap: wrap; justify-content: flex-end; }
+    }
+
+    @media (max-width: 520px) {
+      .brand span:last-child { display: none; }
+      .pill-button { min-height: 40px; padding: 0 11px; font-size: 13px; }
+      .avatar { width: 132px; height: 132px; font-size: 46px; }
+      .chat-head, .chat-form { grid-template-columns: 1fr; }
+      .chat-head { display: grid; }
+      .chat-message { max-width: 100%; }
+    }
+
+    @media (max-width: 720px) {
+      .profile-header {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 12px;
+      }
+
+      .brand {
+        min-width: 0;
+        width: 100%;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+        flex: 0 0 auto;
+        font-size: 13px;
+      }
+
+      .brand span:last-child {
+        display: block;
+      }
+
+      .brand strong {
+        font-size: 15px;
+      }
+
+      .brand small {
+        font-size: 12px;
+      }
+
+      .header-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        gap: 8px;
+      }
+
+      .pill-button {
+        width: 100%;
+        min-width: 0;
+        min-height: 40px;
+        padding: 0 10px;
+        font-size: 13px;
+      }
+
+      .page {
+        width: calc(100% - 24px);
+        padding: 28px 0;
+      }
+
+      h1 {
+        font-size: clamp(30px, 10vw, 40px);
+      }
+
+      .summary-panel,
+      .form-panel,
+      .chat-panel {
+        padding: 18px;
+      }
+
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .chat-log {
+        max-height: 52vh;
+      }
+
+      .chat-form {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="profile-header">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><img src="assets/mandah-mark.png" alt="" aria-hidden="true" /></span>
+      <span><strong>Мандах Нярайн</strong><small>Сувилал profile</small></span>
+    </a>
+    <div class="header-actions">
+      <button class="pill-button" type="button" data-theme-toggle>Шөнө</button>
+      <a class="pill-button" href="index.html">Нүүр</a>
+      <a class="pill-button pill-primary" href="index.html#contact">Холбоо барих</a>
+      <button class="pill-button" type="button" data-profile-logout>Гарах</button>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="page-title">
+      <p class="eyebrow">Хэрэглэгчийн хэсэг</p>
+      <h1>Хэрэглэгчийн profile</h1>
+      <p class="lead">Profile зураг, холбоо барих мэдээлэл, сонгосон багц болон хувийн тэмдэглэлээ хадгалаарай.</p>
+    </section>
+
+    <section class="profile-layout">
+      <aside class="panel summary-panel">
+        <div class="avatar-wrap">
+          <div class="avatar" data-avatar>МН</div>
+          <label class="pill-button upload-label">
+            Profile зураг солих
+            <input type="file" accept="image/*" data-photo-input />
+          </label>
+        </div>
+        <h2 class="summary-name" data-summary-name>Хэрэглэгч</h2>
+        <p class="summary-account" data-summary-account>Утас эсвэл имэйл</p>
+        <div class="mini-stats">
+          <div><span>Багц</span><strong data-summary-package>Сонгоогүй</strong></div>
+          <div><span>Хэл</span><strong data-summary-language>Монгол</strong></div>
+          <div><span>Төлөв</span><strong>Идэвхтэй</strong></div>
+        </div>
+      </aside>
+
+      <section class="panel form-panel">
+        <form class="profile-form" data-profile-page-form>
+          <div class="field-grid">
+            <label>Нэр<input type="text" name="name" placeholder="Нэрээ бичнэ үү" /></label>
+            <label>Утас<input type="tel" name="phone" placeholder="99112233" /></label>
+          </div>
+          <div class="field-grid">
+            <label>Имэйл<input type="email" name="email" placeholder="name@example.com" /></label>
+            <label>Сонгосон багц
+              <select name="package">
+                <option value="">Сонгох</option>
+                <option>1 хоног - 280,000₮</option>
+                <option>5 хоног - 1,400,000₮</option>
+                <option>7 хоног - 1,960,000₮</option>
+                <option>14 хоног - 3,920,000₮</option>
+              </select>
+            </label>
+          </div>
+          <div class="field-grid">
+            <label>Харилцах хэл
+              <select name="language">
+                <option value="mn">Монгол</option>
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+                <option value="zh">中文</option>
+              </select>
+            </label>
+            <label>Яаралтай холбоо барих хүн<input type="text" name="emergency" placeholder="Нэр, утас" /></label>
+          </div>
+          <label>Тэмдэглэл<textarea name="notes" rows="4" placeholder="Эмчид хэлэх зүйл, байрлах өдөр, онцгой хүсэлт гэх мэт"></textarea></label>
+          <button class="pill-button pill-primary" type="submit">Profile хадгалах</button>
+          <p class="form-note" data-form-note></p>
+        </form>
+
+        <div class="quick-actions">
+          <button class="quick-card" type="button" data-go-booking>Захиалга хийх<span>Сувиллын бүртгэл рүү очих</span></button>
+          <button class="quick-card" type="button" data-go-pricing>Үнэ харах<span>Багцуудын үнийн хэсэг</span></button>
+          <button class="quick-card" type="button" data-focus-chat>Эмчтэй чатлах<span>Асуултаа шууд бичих</span></button>
+          <button class="quick-card" type="button" data-clear-profile>Цэвэрлэх<span>Энэ profile-ийн хадгалсан мэдээллийг арилгах</span></button>
+        </div>
+      </section>
+    </section>
+
+    <section class="panel chat-panel" id="profile-chat">
+      <div class="chat-head">
+        <div>
+          <p class="eyebrow">Чат</p>
+          <h2>Эмчтэй чатлах</h2>
+          <p>Энд бичсэн мессеж эмчийн dashboard дээр харагдана.</p>
+        </div>
+        <span class="chat-status">Doctor chat</span>
+      </div>
+      <div class="chat-log" data-chat-log aria-live="polite"></div>
+      <form class="chat-form" data-chat-form>
+        <label><span>Мессеж</span><textarea name="message" rows="2" placeholder="Эмчид бичих зүйлээ энд бичнэ үү" required></textarea></label>
+        <button class="pill-button pill-primary" type="submit">Илгээх</button>
+      </form>
+      <p class="form-note" data-chat-note></p>
+    </section>
+  </main>
+
+  <script>
+    const form = document.querySelector("[data-profile-page-form]");
+    const note = document.querySelector("[data-form-note]");
+    const avatar = document.querySelector("[data-avatar]");
+    const photoInput = document.querySelector("[data-photo-input]");
+    const summaryName = document.querySelector("[data-summary-name]");
+    const summaryAccount = document.querySelector("[data-summary-account]");
+    const summaryPackage = document.querySelector("[data-summary-package]");
+    const summaryLanguage = document.querySelector("[data-summary-language]");
+    const themeToggle = document.querySelector("[data-theme-toggle]");
+    const profileLogout = document.querySelector("[data-profile-logout]");
+    const chatForm = document.querySelector("[data-chat-form]");
+    const chatLog = document.querySelector("[data-chat-log]");
+    const chatNote = document.querySelector("[data-chat-note]");
+    const focusChat = document.querySelector("[data-focus-chat]");
+    const chatStorageKey = "nursery-chat-messages";
+    const languageNames = { mn: "Монгол", en: "English", ru: "Русский", zh: "中文" };
+
+    const getInitials = (name) => {
+      const clean = String(name || "Мандах Нярайн").trim();
+      return clean.split(/\s+/).slice(0, 2).map((part) => part[0] || "").join("").toUpperCase() || "МН";
+    };
+
+    const readProfile = () => {
+      try { return JSON.parse(localStorage.getItem("nursery-profile-page") || "{}"); }
+      catch (error) { return {}; }
+    };
+
+    const writeProfile = (data) => {
+      try { localStorage.setItem("nursery-profile-page", JSON.stringify(data)); }
+      catch (error) {}
+    };
+
+    const readChatMessages = () => {
+      try {
+        const messages = JSON.parse(localStorage.getItem(chatStorageKey) || "[]");
+        return Array.isArray(messages) ? messages : [];
+      } catch (error) {
+        return [];
+      }
+    };
+
+    const writeChatMessages = (messages) => {
+      try { localStorage.setItem(chatStorageKey, JSON.stringify(messages)); }
+      catch (error) {}
+    };
+
+    const getChatAccount = () => {
+      const data = readProfile();
+      return data.email || data.phone || localStorage.getItem("nursery-current-account") || "Хэрэглэгч";
+    };
+
+    const formatChatTime = (value) => {
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "";
+      try {
+        return new Intl.DateTimeFormat("mn-MN", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }).format(date);
+      } catch (error) {
+        return date.toLocaleString();
+      }
+    };
+
+    const renderChat = () => {
+      const messages = readChatMessages();
+      chatLog.innerHTML = "";
+
+      if (!messages.length) {
+        const empty = document.createElement("p");
+        empty.className = "chat-empty";
+        empty.textContent = "Одоогоор чат эхлээгүй байна.";
+        chatLog.appendChild(empty);
+        return;
+      }
+
+      messages.forEach((message) => {
+        const item = document.createElement("article");
+        item.className = "chat-message " + (message.sender === "doctor" ? "is-doctor" : "is-user");
+
+        const sender = document.createElement("strong");
+        sender.textContent = message.sender === "doctor" ? "Эмч" : (message.name || "Та");
+
+        const body = document.createElement("p");
+        body.textContent = message.text || "";
+
+        const time = document.createElement("time");
+        time.dateTime = message.createdAt || "";
+        time.textContent = formatChatTime(message.createdAt);
+
+        item.append(sender, body, time);
+        chatLog.appendChild(item);
+      });
+      chatLog.scrollTop = chatLog.scrollHeight;
+    };
+
+    const render = (data) => {
+      form.name.value = data.name || "";
+      form.phone.value = data.phone || "";
+      form.email.value = data.email || "";
+      form.package.value = data.package || "";
+      form.language.value = data.language || localStorage.getItem("nursery-language") || "mn";
+      form.emergency.value = data.emergency || "";
+      form.notes.value = data.notes || "";
+
+      const account = data.email || data.phone || localStorage.getItem("nursery-current-account") || "Утас эсвэл имэйл";
+      summaryName.textContent = data.name || "Хэрэглэгч";
+      summaryAccount.textContent = account;
+      summaryPackage.textContent = data.package || "Сонгоогүй";
+      summaryLanguage.textContent = languageNames[form.language.value] || "Монгол";
+
+      avatar.innerHTML = "";
+      if (data.photo) {
+        const img = document.createElement("img");
+        img.src = data.photo;
+        img.alt = "Profile зураг";
+        avatar.appendChild(img);
+      } else {
+        avatar.textContent = getInitials(data.name);
+      }
+    };
+
+    const currentAccount = localStorage.getItem("nursery-current-account") || "";
+    const initial = readProfile();
+    if (currentAccount && !initial.email && !initial.phone) {
+      if (currentAccount.includes("@")) initial.email = currentAccount;
+      else initial.phone = currentAccount;
+    }
+    render(initial);
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const previous = readProfile();
+      const data = {
+        ...previous,
+        name: form.name.value.trim(),
+        phone: form.phone.value.trim(),
+        email: form.email.value.trim(),
+        package: form.package.value,
+        language: form.language.value,
+        emergency: form.emergency.value.trim(),
+        notes: form.notes.value.trim()
+      };
+      writeProfile(data);
+      try { localStorage.setItem("nursery-language", data.language); } catch (error) {}
+      render(data);
+      note.textContent = "Profile мэдээлэл хадгалагдлаа.";
+    });
+
+    photoInput.addEventListener("change", () => {
+      const file = photoInput.files && photoInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const data = { ...readProfile(), photo: String(reader.result || "") };
+        writeProfile(data);
+        render(data);
+        note.textContent = "Profile зураг хадгалагдлаа.";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    themeToggle.addEventListener("click", () => {
+      const next = document.body.dataset.theme === "night" ? "day" : "night";
+      document.body.dataset.theme = next;
+      themeToggle.textContent = next === "night" ? "Өдөр" : "Шөнө";
+      try { localStorage.setItem("nursery-theme", next); } catch (error) {}
+    });
+
+    profileLogout.addEventListener("click", () => {
+      try {
+        localStorage.removeItem("nursery-logged-in");
+        localStorage.removeItem("nursery-current-account");
+      } catch (error) {}
+      window.location.href = "index.html";
+    });
+
+    document.querySelector("[data-go-booking]").addEventListener("click", () => { window.location.href = "index.html#contact"; });
+    document.querySelector("[data-go-pricing]").addEventListener("click", () => { window.location.href = "index.html#packages"; });
+    focusChat.addEventListener("click", () => {
+      document.querySelector("#profile-chat").scrollIntoView({ behavior: "smooth", block: "start" });
+      const messageBox = chatForm.querySelector("textarea");
+      if (messageBox) messageBox.focus();
+    });
+    document.querySelector("[data-clear-profile]").addEventListener("click", () => {
+      try { localStorage.removeItem("nursery-profile-page"); } catch (error) {}
+      note.textContent = "Profile мэдээлэл цэвэрлэгдлээ.";
+      render({});
+    });
+
+    chatForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const messageBox = chatForm.elements.message;
+      const text = String(messageBox.value || "").trim();
+      if (!text) return;
+      const profile = readProfile();
+      const account = getChatAccount();
+      const messages = readChatMessages();
+      messages.push({
+        id: String(Date.now()),
+        sender: "user",
+        account,
+        name: profile.name || account || "Хэрэглэгч",
+        text,
+        createdAt: new Date().toISOString()
+      });
+      writeChatMessages(messages);
+      messageBox.value = "";
+      chatNote.textContent = "Мессеж илгээгдлээ.";
+      renderChat();
+    });
+
+    const savedTheme = localStorage.getItem("nursery-theme") || "day";
+    document.body.dataset.theme = savedTheme;
+    themeToggle.textContent = savedTheme === "night" ? "Өдөр" : "Шөнө";
+    renderChat();
+    window.addEventListener("storage", (event) => {
+      if (event.key === chatStorageKey) renderChat();
+    });
+  </script>
+</body>
+</html>

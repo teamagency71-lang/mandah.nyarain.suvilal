@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin самбар | Мандах Нярайн Сувилал</title>
+  <style>
+    :root { --ink:#22312f; --muted:#66736f; --paper:#fffdf9; --soft:#f5f0e8; --mint:#d9eee6; --teal:#1f6f67; --rose:#d98f85; --gold:#c09a55; --line:rgba(34,49,47,.12); --shadow:0 22px 55px rgba(34,49,47,.14); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); line-height:1.6; }
+    body[data-theme="night"] { --ink:#edf6f2; --muted:#b7c8c2; --paper:#101918; --soft:#172422; --mint:#213d36; --teal:#7bd1c4; --rose:#eea49b; --gold:#e0bf73; --line:rgba(237,246,242,.16); --shadow:0 24px 62px rgba(0,0,0,.36); }
+    a { color:inherit; text-decoration:none; } button,input,textarea,select { font:inherit; }
+    .topbar { position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px clamp(16px,4vw,54px); border-bottom:1px solid var(--line); background:rgba(255,253,249,.94); backdrop-filter:blur(14px); }
+    body[data-theme="night"] .topbar { background:rgba(16,25,24,.94); }
+    .brand { display:inline-flex; align-items:center; gap:12px; }
+    .brand-mark { display:grid; width:42px; height:42px; place-items:center; overflow:hidden; border:1px solid var(--line); border-radius:50%; background:#fff; box-shadow:0 10px 24px rgba(34,49,47,.14); }
+    .brand-mark img { width:100%; height:100%; object-fit:cover; }
+    .brand strong,.brand small { display:block; line-height:1.1; }
+    .brand small { color:var(--muted); }
+    .actions { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:10px; }
+    .button { display:inline-flex; min-height:42px; align-items:center; justify-content:center; border:1px solid var(--line); border-radius:999px; background:#fff; color:var(--ink); padding:0 14px; font-weight:850; cursor:pointer; }
+    .button-primary { background:var(--teal); color:#fff; border-color:transparent; }
+    body[data-theme="night"] .button { background:#172422; color:var(--ink); }
+    body[data-theme="night"] .button-primary { background:var(--teal); color:#071412; }
+    .page { width:min(1240px,calc(100% - 32px)); margin:0 auto; padding:clamp(34px,6vw,72px) 0; }
+    .title { display:grid; gap:12px; margin-bottom:24px; }
+    .eyebrow { margin:0; color:var(--gold); font-size:13px; font-weight:850; letter-spacing:.08em; text-transform:uppercase; }
+    h1 { margin:0; font-size:clamp(34px,5vw,58px); line-height:1.04; letter-spacing:0; }
+    h2 { margin:0; font-size:clamp(24px,3vw,34px); line-height:1.1; }
+    .lead { max-width:860px; margin:0; color:var(--muted); font-size:18px; }
+    .layout { display:grid; grid-template-columns:minmax(300px,.78fr) minmax(0,1.22fr); gap:18px; align-items:start; }
+    .panel { border:1px solid var(--line); border-radius:8px; background:#fff; box-shadow:var(--shadow); padding:clamp(20px,4vw,30px); }
+    body[data-theme="night"] .panel { background:#172422; }
+    .form { display:grid; gap:16px; }
+    .field-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    label { display:grid; gap:8px; font-weight:750; }
+    input,textarea { width:100%; border:1px solid var(--line); border-radius:8px; background:var(--paper); color:var(--ink); padding:12px 13px; }
+    textarea { min-height:88px; resize:vertical; }
+    .note { min-height:24px; margin:0; color:var(--teal); font-weight:850; }
+    .slide-list { display:grid; gap:10px; margin-top:14px; }
+    .slide-item { display:grid; grid-template-columns:76px minmax(0,1fr) auto; gap:12px; align-items:center; border:1px solid var(--line); border-radius:8px; background:var(--paper); padding:10px; cursor:pointer; }
+    .slide-item.is-active { border-color:var(--teal); box-shadow:0 0 0 2px rgba(31,111,103,.16); }
+    .slide-thumb { width:76px; height:54px; border-radius:6px; background:var(--mint) center/cover; }
+    .slide-item strong { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .slide-item span { color:var(--muted); font-size:13px; }
+    .icon-button { width:36px; height:36px; border:1px solid var(--line); border-radius:50%; background:#fff; color:var(--ink); cursor:pointer; }
+    .account-card { display:grid; gap:8px; margin-top:16px; padding:16px; border-radius:8px; background:var(--mint); color:var(--teal); font-weight:850; }
+    .request-head { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:16px; }
+    .request-list { display:grid; gap:12px; }
+    .request-card { display:grid; gap:10px; border:1px solid var(--line); border-radius:8px; background:var(--paper); padding:14px; }
+    .request-card.is-new { border-color:rgba(31,111,103,.44); box-shadow:0 0 0 2px rgba(31,111,103,.12); }
+    .request-meta { display:flex; flex-wrap:wrap; gap:8px; color:var(--muted); font-size:13px; }
+    .request-meta span { display:inline-flex; border-radius:999px; background:var(--soft); padding:4px 9px; }
+    .request-card h3 { margin:0; font-size:20px; line-height:1.16; }
+    .request-card p { margin:0; color:var(--muted); overflow-wrap:anywhere; white-space:pre-wrap; }
+    .request-actions { display:flex; flex-wrap:wrap; gap:8px; }
+    .request-empty { margin:0; border:1px dashed var(--line); border-radius:8px; color:var(--muted); padding:18px; text-align:center; }
+    .preview { overflow:hidden; border:1px solid var(--line); border-radius:8px; background:var(--soft); }
+    .preview-image { min-height:280px; background:center/cover; }
+    .preview-body { padding:18px; }
+    .editor-groups { display:grid; gap:16px; }
+    .editor-group { display:grid; gap:12px; border-top:1px solid var(--line); padding-top:16px; }
+    .editor-group h3 { margin:0; font-size:20px; }
+    .sticky-actions { position:sticky; bottom:12px; z-index:4; display:flex; flex-wrap:wrap; gap:10px; border:1px solid var(--line); border-radius:8px; background:rgba(255,253,249,.96); padding:12px; box-shadow:0 14px 32px rgba(34,49,47,.12); backdrop-filter:blur(12px); }
+    body[data-theme="night"] .sticky-actions { background:rgba(16,25,24,.96); }
+    @media (max-width:900px) { .layout,.field-grid { grid-template-columns:1fr; } }
+    @media (max-width:620px) { .topbar,.actions { display:grid; grid-template-columns:1fr; } .page { width:calc(100% - 24px); padding:28px 0; } .panel { padding:18px; } .slide-item { grid-template-columns:64px minmax(0,1fr) auto; } .slide-thumb { width:64px; height:48px; } .button { width:100%; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark"><img src="assets/mandah-mark.png" alt="" aria-hidden="true" /></span><span><strong>Admin account</strong><small>сайтын удирдлага</small></span></a>
+    <div class="actions"><button class="button" type="button" data-theme-toggle>Шөнө</button><a class="button" href="index.html">Нүүр харах</a><button class="button button-primary" type="button" data-logout>Гарах</button></div>
+  </header>
+
+  <main class="page">
+    <section class="title">
+      <p class="eyebrow">Admin самбар</p>
+      <h1>Сайтын бүх тохиргоо</h1>
+      <p class="lead">Эндээс нүүр хуудасны зураг, өрөөний зураг, холбоо барих мэдээлэл, текстүүд, багийн нэр, үнэ болон багцын дэлгэрэнгүй мэдээллийг засна.</p>
+    </section>
+
+    <section class="panel">
+      <div class="request-head">
+        <div>
+          <p class="eyebrow">Бүртгэл</p>
+          <h2>Бүртгүүлэх хүсэлтүүд</h2>
+          <p class="lead">Нүүр хуудасны бүртгэлийн form-оор илгээсэн хүсэлтүүд энд ирнэ.</p>
+        </div>
+        <button class="button" type="button" data-clear-requests>Бүгдийг цэвэрлэх</button>
+      </div>
+      <div class="request-list" data-request-list aria-live="polite"></div>
+      <p class="note" data-request-note></p>
+    </section>
+
+    <section class="layout">
+      <aside class="panel">
+        <button class="button button-primary" type="button" data-add-slide>+ Hero зураг нэмэх</button>
+        <div class="slide-list" data-slide-list></div>
+        <div class="account-card"><span>Admin account</span><strong>admin@mandah.mn</strong><span>Нууц үг: admin123</span></div>
+      </aside>
+
+      <section class="panel">
+        <form class="form" data-admin-form>
+          <h2>Зураг ба холбоо барих</h2>
+          <div class="field-grid"><label>Hero зургийн URL<input type="url" name="image" placeholder="https://... зурагны холбоос" /></label><label>Hero зураг upload<input type="file" accept="image/*" data-image-file /></label></div>
+          <label>Hero гарчиг<input type="text" name="title" placeholder="Гарчиг" /></label>
+          <label>Hero тайлбар<textarea name="copy" rows="4" placeholder="Тайлбар"></textarea></label>
+          <div class="field-grid"><label>Өрөөний том зураг URL<input type="text" name="roomImage" placeholder="assets/room-photo.png" /></label><label>Өрөөний зураг upload<input type="file" accept="image/*" data-room-file /></label></div>
+          <div class="field-grid"><label>Слайд солигдох хугацаа /миллисекунд/<input type="number" name="slideInterval" min="2500" step="500" placeholder="5200" /></label><label>Утас<input type="text" name="phone" placeholder="7711-2233" /></label></div>
+          <div class="field-grid"><label>Цагийн хуваарь<input type="text" name="hours" placeholder="Өдөр бүр 08:00-21:00" /></label><label>Хаяг<input type="text" name="address" placeholder="Улаанбаатар хот, Хан-Уул дүүрэг" /></label></div>
+          <label>Холбоо барих тайлбар<textarea name="contactCopy" rows="3" placeholder="Та хүсэлтээ үлдээгээрэй..."></textarea></label>
+
+          <div class="preview">
+            <div class="preview-image" data-preview-image></div>
+            <div class="preview-body"><p class="eyebrow">Preview</p><h2 data-preview-title></h2><p data-preview-copy></p></div>
+          </div>
+
+          <div class="editor-groups" data-editor-groups></div>
+
+          <div class="sticky-actions">
+            <button class="button button-primary" type="submit">Бүх өөрчлөлт хадгалах</button>
+            <button class="button" type="button" data-reset>Анхны утга сэргээх</button>
+            <p class="note" data-note></p>
+          </div>
+        </form>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    if (localStorage.getItem("nursery-admin-logged-in") !== "true") {
+      window.location.href = "index.html";
+    }
+
+    const defaultRoomImage = "assets/room-photo.png";
+    const defaults = {
+      slides: [{ image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=1800&q=82", title: "Эх, нярай хоёрт амар тайван сувилахуйн орчин", copy: "Мэргэжлийн сувилагч, эмчийн зөвлөгөө, шим тэжээлтэй хоол, нярайн өдөр тутмын асаргаа, ээжийн амралт сэргэлтийг нэг дор." }],
+      roomImage: defaultRoomImage,
+      slideInterval: 5200,
+      contactCopy: "Та хүсэлтээ үлдээгээрэй. Бид ажлын цагаар холбогдож өрөөний боломж, тохирох багцыг тайлбарлана.",
+      phone: "7711-2233",
+      address: "Улаанбаатар хот, Хан-Уул дүүрэг",
+      hours: "Өдөр бүр 08:00-21:00"
+    };
+
+    const contentGroups = [
+      { title:"Брэнд ба цэс", fields:[["brand.name","Брэнд нэр","Мандах Нярайн"],["brand.type","Брэнд төрөл","Сувилал"],["nav.services","Цэс - Үйлчилгээ","Үйлчилгээ"],["nav.rooms","Цэс - Өрөө","Өрөө"],["nav.schedule","Цэс - Хөтөлбөр","Хөтөлбөр"],["nav.team","Цэс - Мэргэжилтнүүд","Мэргэжилтнүүд"],["nav.contact","Цэс - Холбоо барих","Холбоо барих"]] },
+      { title:"Hero ба товч", fields:[["hero.eyebrow","Hero жижиг гарчиг","Төрсний дараах нөхөн сэргэлт ба нярайн асаргаа"],["hero.title","Hero том гарчиг","Эх, нярай хоёрт амар тайван сувилахуйн орчин"],["hero.copy","Hero тайлбар","Мэргэжлийн сувилагч, эмчийн зөвлөгөө, шим тэжээлтэй хоол, нярайн өдөр тутмын асаргаа, ээжийн амралт сэргэлтийг нэг дор.","textarea"],["hero.book","Hero товч 1","Цаг захиалах"],["hero.viewServices","Hero товч 2","Үйлчилгээ харах"]] },
+      { title:"Товч мэдээлэл", fields:[["quick.care","1-р тайлбар","Сувилахуйн хяналт"],["quick.days","2-р тайлбар","Хоногийн багц"],["quick.consult","3-р тайлбар","Ээжид зориулсан зөвлөгөө"],["quick.meals","4-р тайлбар","Тэнцвэртэй хоол өдөр бүр"]] },
+      { title:"Танилцуулга", fields:[["intro.kicker","Танилцуулга жижиг гарчиг","Бидний орчин"],["intro.title","Танилцуулга гарчиг","Тайван амралт, найдвартай асаргаа, гэр бүлд ойр мэдрэмж"],["intro.copy","Танилцуулга тайлбар","Мандах Нярайн Сувилал нь төрсний дараах ядаргаа тайлах, нярайн анхны өдрүүдийн асаргаанд дэмжлэг үзүүлэх, ээжид өөртөө итгэлтэй болох орчинг бүрдүүлдэг.","textarea"]] },
+      { title:"Үйлчилгээ", fields:[["services.kicker","Үйлчилгээ жижиг гарчиг","Үйлчилгээ"],["services.title","Үйлчилгээ гарчиг","Ээж, нярайд хэрэгтэй бүх дэмжлэг"],["services.recovery.title","Үйлчилгээ 1 нэр","Эхийн нөхөн сэргэлт"],["services.recovery.copy","Үйлчилгээ 1 тайлбар","Амралт, халуун жин, хөнгөн дасгал, хооллолтын зөвлөгөөг өдөр тутам хослуулна.","textarea"],["services.baby.title","Үйлчилгээ 2 нэр","Нярайн асаргаа"],["services.baby.copy","Үйлчилгээ 2 тайлбар","Усанд оруулах, хүй арчилгаа, жин хяналт, унтах хэмнэлийг мэргэжлийн баг дэмжинэ.","textarea"],["services.feeding.title","Үйлчилгээ 3 нэр","Хөхүүл зөвлөгөө"],["services.feeding.copy","Үйлчилгээ 3 тайлбар","Хөхүүл байрлал, сүүний гарц, ээжийн тав тухыг нэг бүрчлэн зөвлөнө.","textarea"],["services.support.title","Үйлчилгээ 4 нэр","Сэтгэлзүйн дэмжлэг"],["services.support.copy","Үйлчилгээ 4 тайлбар","Төрсний дараах сэтгэл санааны өөрчлөлт, гэр бүлийн оролцоонд тайван зөвлөгөө өгнө.","textarea"]] },
+      { title:"Өрөө", fields:[["rooms.kicker","Өрөө жижиг гарчиг","Өрөөний сонголт"],["rooms.title","Өрөө гарчиг","Цэвэр, тухтай, нам гүм амрах өрөөнүүд"],["rooms.family.title","Гэр бүлийн өрөө нэр","Гэр бүлийн өрөө"],["rooms.family.copy","Гэр бүлийн өрөө тайлбар","Ээж, нярай, асран хамгаалагч хамт байрлах боломжтой, ариун цэврийн өрөөтэй.","textarea"],["rooms.family.tag","Гэр бүлийн өрөө tag","7 хоногийн багц"],["rooms.standard.title","Стандарт өрөө нэр","Стандарт өрөө"],["rooms.standard.copy","Стандарт өрөө тайлбар","Нэг ээж, нэг нярайд зориулсан тайван өрөө.","textarea"],["rooms.deluxe.title","Делюкс өрөө нэр","Делюкс өрөө"],["rooms.deluxe.copy","Делюкс өрөө тайлбар","Илүү зайтай, зочин хүлээн авах хэсэгтэй.","textarea"],["rooms.day.title","Өдрийн сувилгаа нэр","Өдрийн сувилгаа"],["rooms.day.copy","Өдрийн сувилгаа тайлбар","Өдрийн үзлэг, зөвлөгөө, нярайн асаргааны багц.","textarea"]] },
+      { title:"Өдрийн хөтөлбөр", fields:[["schedule.kicker","Хөтөлбөр жижиг гарчиг","Өдрийн хөтөлбөр"],["schedule.title","Хөтөлбөр гарчиг","Ээжид амралт, нярайд тогтмол хэмнэл"],["schedule.morning.title","Өглөөний нэр","Өглөөний үзлэг"],["schedule.morning.copy","Өглөөний тайлбар","Ээжийн даралт, биеийн байдал, нярайн жин болон арьсны өнгийг хянана.","textarea"],["schedule.baby.title","Нярайн асаргаа нэр","Нярайн асаргаа"],["schedule.baby.copy","Нярайн асаргаа тайлбар","Усанд оруулах, хүй цэвэрлэх, хувцаслалт болон унтах орчны зөвлөгөө.","textarea"],["schedule.recovery.title","Нөхөн сэргэлт нэр","Эхийн нөхөн сэргэлт"],["schedule.recovery.copy","Нөхөн сэргэлт тайлбар","Хөнгөн сунгалт, амралтын цаг, хооллолт болон хөхүүл зөвлөгөө.","textarea"],["schedule.evening.title","Оройн нэр","Оройн хяналт"],["schedule.evening.copy","Оройн тайлбар","Нярайн унтах хэмнэл, ээжийн амрах нөхцөлийг шалгаж тайван орчныг бүрдүүлнэ.","textarea"]] },
+      { title:"Баг", fields:[["team.kicker","Баг жижиг гарчиг","Манай баг"],["team.title","Баг гарчиг","Эмч, эх баригч, сувилагчийн хамтарсан халамж"],["team.doctor","Албан тушаал 1","Эх барих эмэгтэйчүүдийн эмч"],["team.nurse","Албан тушаал 2","Нярайн сувилагч"],["team.consultant","Албан тушаал 3","Хөхүүл зөвлөх"]] },
+      { title:"Төлбөр", fields:[["packages.kicker","Төлбөр жижиг гарчиг","Төлбөр"],["packages.title","Төлбөр гарчиг","1 хоногийн төлбөр 280,000₮"],["packages.one.title","Багц 1 нэр","1 хоног"],["packages.one.copy","Багц 1 тайлбар","Ээж, нярай хамт байрлах хоногийн үндсэн төлбөр.","textarea"],["packages.five.title","Багц 5 нэр","5 хоног"],["packages.five.copy","Багц 5 тайлбар","Төрсний дараах богино хугацааны амралт, үндсэн асаргаа.","textarea"],["packages.seven.title","Багц 7 нэр","7 хоног"],["packages.seven.copy","Багц 7 тайлбар","Эхийн нөхөн сэргэлт, нярайн бүрэн асаргаанд тохиромжтой багц.","textarea"],["packages.fourteen.title","Багц 14 нэр","14 хоног"],["packages.fourteen.copy","Багц 14 тайлбар","Урт хугацааны амралт, тогтмол хяналт, гэр бүлийн зөвлөгөө.","textarea"],["packages.thirty.title","Багц 30 нэр","30 хоног"],["packages.thirty.copy","Багц 30 тайлбар","Сарын турш амрах, тогтмол хяналттай бүрэн багц.","textarea"]] },
+      { title:"Холбоо барих", fields:[["contact.kicker","Холбоо жижиг гарчиг","Холбоо барих"],["contact.title","Холбоо гарчиг","Цаг захиалах хүсэлт илгээх"],["contact.copy","Холбоо тайлбар","Та хүсэлтээ үлдээгээрэй. Бид ажлын цагаар холбогдож өрөөний боломж, тохирох багцыг тайлбарлана.","textarea"],["contact.phoneLabel","Утас label","Утас:"],["contact.addressLabel","Хаяг label","Хаяг:"],["contact.address","Хаяг","Улаанбаатар хот, Хан-Уул дүүрэг"],["contact.hoursLabel","Цаг label","Цагийн хуваарь:"],["contact.hours","Цаг","Өдөр бүр 08:00-21:00"]] }
+    ];
+
+    const valueFields = [
+      ["quick.0.value","Товч мэдээлэл 1 тоо","24/7"],["quick.1.value","Товч мэдээлэл 2 тоо","1-14"],["quick.2.value","Товч мэдээлэл 3 тоо","1:1"],["quick.3.value","Товч мэдээлэл 4 тоо","3"],
+      ["schedule.morning.time","Өглөөний цаг","08:30"],["schedule.baby.time","Нярайн асаргаа цаг","11:00"],["schedule.recovery.time","Нөхөн сэргэлт цаг","15:00"],["schedule.evening.time","Оройн цаг","20:00"],
+      ["team.0.initial","Баг 1 үсэг","Э"],["team.0.name","Баг 1 нэр","Н. Энхтуяа"],["team.1.initial","Баг 2 үсэг","С"],["team.1.name","Баг 2 нэр","Б. Солонго"],["team.2.initial","Баг 3 үсэг","М"],["team.2.name","Баг 3 нэр","Д. Мөнхчимэг"],
+      ["packages.one.price","1 хоног үнэ","280,000₮"],["packages.five.price","5 хоног үнэ","1,400,000₮"],["packages.seven.price","7 хоног үнэ","1,960,000₮"],["packages.fourteen.price","14 хоног үнэ","3,920,000₮"],["packages.thirty.price","30 хоног үнэ","8,400,000₮"],
+      ["contact.phone","Холбоо барих утас","7711-2233"]
+    ];
+
+    const defaultPackageItems = {
+      one:["Ээж, нярай хамт байрлах өрөө","Өдрийн 3 удаагийн шим тэжээлтэй хоол","Нярайн жин, арьс, унтах хэмнэлийн хяналт","Эхийн амралт, хөхүүл зөвлөгөө"],
+      five:["5 хоногийн байрлах үйлчилгээ","Өдөр тутмын сувилахуйн хяналт","Хүй арчилгаа, усанд оруулах зөвлөгөө","Ээжийн хооллолт, амралтын зөвлөмж"],
+      seven:["7 хоногийн байр, хоол","Эмч, сувилагчийн тогтмол ажиглалт","Хөхүүл байрлал, сүүний гарцын зөвлөгөө","Гэртээ гарахын өмнөх асаргааны заавар"],
+      fourteen:["14 хоногийн бүрэн байрлах үйлчилгээ","Эхийн биеийн байдал, сэтгэлзүйн дэмжлэг","Нярайн өдөр тутмын асаргаа, жингийн хяналт","Гэр бүлийн оролцоотой зөвлөгөө"],
+      thirty:["30 хоногийн байр, хоол, сувилахуйн үйлчилгээ","Эмчийн төлөвлөгөөт үзлэг, сувилагчийн өдөр тутмын хяналт","Хөхүүл, хооллолт, нярайн унтах хэмнэлийн зөвлөгөө","Гэртээ шилжих үеийн дэлгэрэнгүй зөвлөмж"]
+    };
+
+    const form = document.querySelector("[data-admin-form]");
+    const note = document.querySelector("[data-note]");
+    const imageFile = document.querySelector("[data-image-file]");
+    const roomFile = document.querySelector("[data-room-file]");
+    const slideList = document.querySelector("[data-slide-list]");
+    const previewImage = document.querySelector("[data-preview-image]");
+    const previewTitle = document.querySelector("[data-preview-title]");
+    const previewCopy = document.querySelector("[data-preview-copy]");
+    const editorGroups = document.querySelector("[data-editor-groups]");
+    const themeToggle = document.querySelector("[data-theme-toggle]");
+    const requestList = document.querySelector("[data-request-list]");
+    const requestNote = document.querySelector("[data-request-note]");
+    const clearRequests = document.querySelector("[data-clear-requests]");
+    const bookingStorageKey = "nursery-booking-requests";
+    let activeIndex = 0;
+
+    const readBookingRequests = () => {
+      try {
+        const requests = JSON.parse(localStorage.getItem(bookingStorageKey) || "[]");
+        return Array.isArray(requests) ? requests : [];
+      } catch (error) {
+        return [];
+      }
+    };
+
+    const writeBookingRequests = (requests) => {
+      try { localStorage.setItem(bookingStorageKey, JSON.stringify(requests)); }
+      catch (error) {}
+    };
+
+    const formatRequestTime = (value) => {
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "";
+      try {
+        return new Intl.DateTimeFormat("mn-MN", { month:"short", day:"numeric", hour:"2-digit", minute:"2-digit" }).format(date);
+      } catch (error) {
+        return date.toLocaleString();
+      }
+    };
+
+    const renderRequests = () => {
+      const requests = readBookingRequests();
+      requestList.innerHTML = "";
+      if (!requests.length) {
+        const empty = document.createElement("p");
+        empty.className = "request-empty";
+        empty.textContent = "Одоогоор бүртгүүлэх хүсэлт ирээгүй байна.";
+        requestList.appendChild(empty);
+        return;
+      }
+
+      requests.forEach((request) => {
+        const card = document.createElement("article");
+        card.className = "request-card" + (request.status === "new" ? " is-new" : "");
+
+        const title = document.createElement("h3");
+        title.textContent = request.name || "Нэргүй хүсэлт";
+
+        const meta = document.createElement("div");
+        meta.className = "request-meta";
+        [formatRequestTime(request.createdAt), request.phone, request.packageName, request.preferredLanguage, request.status === "new" ? "Шинэ" : "Уншсан"].filter(Boolean).forEach((value) => {
+          const chip = document.createElement("span");
+          chip.textContent = value;
+          meta.appendChild(chip);
+        });
+
+        const message = document.createElement("p");
+        message.textContent = request.message || "Нэмэлт мэдээлэлгүй.";
+
+        const actions = document.createElement("div");
+        actions.className = "request-actions";
+        const mark = document.createElement("button");
+        mark.type = "button";
+        mark.className = "button";
+        mark.textContent = request.status === "new" ? "Уншсан болгох" : "Шинэ болгох";
+        mark.addEventListener("click", () => {
+          const next = readBookingRequests().map((item) => item.id === request.id ? { ...item, status: item.status === "new" ? "read" : "new" } : item);
+          writeBookingRequests(next);
+          requestNote.textContent = "Төлөв шинэчлэгдлээ.";
+          renderRequests();
+        });
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "button";
+        remove.textContent = "Устгах";
+        remove.addEventListener("click", () => {
+          const next = readBookingRequests().filter((item) => item.id !== request.id);
+          writeBookingRequests(next);
+          requestNote.textContent = "Хүсэлт устгагдлаа.";
+          renderRequests();
+        });
+        actions.append(mark, remove);
+        card.append(title, meta, message, actions);
+        requestList.appendChild(card);
+      });
+    };
+
+    const normalizeRoomImage = (value) => {
+      return (!value || String(value).includes("photo-1631049307264")) ? defaultRoomImage : value;
+    };
+
+    const readSettings = () => {
+      try {
+        const stored = JSON.parse(localStorage.getItem("nursery-site-settings") || "{}");
+        const legacySlide = stored.heroImage ? [{ image: stored.heroImage, title: stored.heroTitle || defaults.slides[0].title, copy: stored.heroCopy || defaults.slides[0].copy }] : [];
+        return { ...defaults, ...stored, roomImage: normalizeRoomImage(stored.roomImage), slides: Array.isArray(stored.slides) && stored.slides.length ? stored.slides : (legacySlide.length ? legacySlide : defaults.slides) };
+      } catch (error) {
+        return { ...defaults };
+      }
+    };
+
+    const writeSettings = (settings) => {
+      try { localStorage.setItem("nursery-site-settings", JSON.stringify(settings)); }
+      catch (error) {}
+    };
+
+    const createInput = ({ label, value, key, kind, datasetName }) => {
+      const wrapper = document.createElement("label");
+      const title = document.createElement("span");
+      const input = kind === "textarea" ? document.createElement("textarea") : document.createElement("input");
+      title.textContent = label;
+      if (kind !== "textarea") input.type = "text";
+      input.value = value || "";
+      input.dataset[datasetName] = key;
+      wrapper.append(title, input);
+      return wrapper;
+    };
+
+    const renderContentEditor = (settings) => {
+      editorGroups.innerHTML = "";
+      const content = settings.content || {};
+      const fields = settings.fields || {};
+      contentGroups.forEach((group) => {
+        const section = document.createElement("section");
+        section.className = "editor-group";
+        const heading = document.createElement("h3");
+        heading.textContent = group.title;
+        const grid = document.createElement("div");
+        grid.className = "field-grid";
+        group.fields.forEach(([key, label, fallback, kind]) => {
+          grid.appendChild(createInput({ label, value: content[key] || fallback, key, kind, datasetName:"contentKey" }));
+        });
+        section.append(heading, grid);
+        editorGroups.appendChild(section);
+      });
+
+      const values = document.createElement("section");
+      values.className = "editor-group";
+      values.innerHTML = "<h3>Тоо, цаг, үнэ, багийн нэр</h3>";
+      const valueGrid = document.createElement("div");
+      valueGrid.className = "field-grid";
+      valueFields.forEach(([key, label, fallback]) => {
+        valueGrid.appendChild(createInput({ label, value: fields[key] || fallback, key, datasetName:"fieldKey" }));
+      });
+      values.appendChild(valueGrid);
+      editorGroups.appendChild(values);
+
+      const details = document.createElement("section");
+      details.className = "editor-group";
+      details.innerHTML = "<h3>Багцын дэлгэрэнгүй list</h3>";
+      const detailGrid = document.createElement("div");
+      detailGrid.className = "field-grid";
+      Object.entries(defaultPackageItems).forEach(([key, fallback]) => {
+        detailGrid.appendChild(createInput({ label: `${key} багцын мөрүүд`, value: ((settings.packageItems && settings.packageItems[key]) || fallback).join("\n"), key, kind:"textarea", datasetName:"packageKey" }));
+      });
+      details.appendChild(detailGrid);
+      editorGroups.appendChild(details);
+    };
+
+    const renderList = (settings) => {
+      slideList.innerHTML = "";
+      settings.slides.forEach((slide, index) => {
+        const item = document.createElement("div");
+        item.className = "slide-item" + (index === activeIndex ? " is-active" : "");
+        item.tabIndex = 0;
+        item.innerHTML = `<span class="slide-thumb"></span><span><strong></strong><span></span></span><button class="icon-button" type="button" aria-label="Устгах">×</button>`;
+        item.querySelector(".slide-thumb").style.backgroundImage = `url("${slide.image}")`;
+        item.querySelector("strong").textContent = slide.title || `Зураг ${index + 1}`;
+        item.querySelector("span span").textContent = slide.copy || "Тайлбаргүй";
+        item.addEventListener("click", (event) => {
+          if (event.target.closest(".icon-button")) return;
+          const latest = collectSettings();
+          activeIndex = index;
+          render(latest, false);
+        });
+        item.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") {
+            const latest = collectSettings();
+            activeIndex = index;
+            render(latest, false);
+          }
+        });
+        item.querySelector(".icon-button").addEventListener("click", () => {
+          const latest = collectSettings();
+          if (latest.slides.length === 1) { note.textContent = "Дор хаяж нэг hero зураг үлдэх ёстой."; return; }
+          latest.slides.splice(index, 1);
+          activeIndex = Math.max(0, activeIndex - (activeIndex >= latest.slides.length ? 1 : 0));
+          writeSettings(latest);
+          render(latest);
+        });
+        slideList.appendChild(item);
+      });
+    };
+
+    const render = (settings, rebuildEditor = true) => {
+      const slide = settings.slides[activeIndex] || settings.slides[0];
+      form.image.value = slide.image || "";
+      form.title.value = slide.title || "";
+      form.copy.value = slide.copy || "";
+      form.roomImage.value = normalizeRoomImage(settings.roomImage);
+      form.slideInterval.value = settings.slideInterval || 5200;
+      form.contactCopy.value = settings.contactCopy || "";
+      form.phone.value = settings.phone || "";
+      form.address.value = settings.address || "";
+      form.hours.value = settings.hours || "";
+      previewImage.style.backgroundImage = `linear-gradient(90deg, rgba(18,42,38,.72), rgba(18,42,38,.18)), url("${slide.image}")`;
+      previewTitle.textContent = slide.title || "";
+      previewCopy.textContent = slide.copy || "";
+      renderList(settings);
+      if (rebuildEditor) renderContentEditor(settings);
+    };
+
+    const collectSettings = () => {
+      const settings = readSettings();
+      const slide = settings.slides[activeIndex] || settings.slides[0];
+      slide.image = form.image.value.trim();
+      slide.title = form.title.value.trim();
+      slide.copy = form.copy.value.trim();
+      settings.roomImage = normalizeRoomImage(form.roomImage.value.trim());
+      settings.slideInterval = Number(form.slideInterval.value || 5200);
+      settings.contactCopy = form.contactCopy.value.trim();
+      settings.phone = form.phone.value.trim();
+      settings.address = form.address.value.trim();
+      settings.hours = form.hours.value.trim();
+      settings.content = {};
+      settings.fields = {};
+      settings.packageItems = {};
+      document.querySelectorAll("[data-content-key]").forEach((input) => {
+        settings.content[input.dataset.contentKey] = input.value.trim();
+      });
+      document.querySelectorAll("[data-field-key]").forEach((input) => {
+        settings.fields[input.dataset.fieldKey] = input.value.trim();
+      });
+      document.querySelectorAll("[data-package-key]").forEach((input) => {
+        settings.packageItems[input.dataset.packageKey] = input.value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+      });
+      return settings;
+    };
+
+    form.addEventListener("input", () => {
+      const settings = collectSettings();
+      render(settings, false);
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const settings = collectSettings();
+      writeSettings(settings);
+      render(settings);
+      note.textContent = "Хадгалагдлаа. Нүүр хуудсаа refresh хийгээд харна уу.";
+    });
+
+    document.querySelector("[data-add-slide]").addEventListener("click", () => {
+      const settings = collectSettings();
+      settings.slides.push({ image: defaults.slides[0].image, title: `Шинэ зураг ${settings.slides.length + 1}`, copy: "Энэ зурагны тайлбарыг энд бичнэ." });
+      activeIndex = settings.slides.length - 1;
+      writeSettings(settings);
+      render(settings);
+      note.textContent = "Шинэ hero зураг нэмэгдлээ.";
+    });
+
+    imageFile.addEventListener("change", () => {
+      const file = imageFile.files && imageFile.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const settings = collectSettings();
+        const slide = settings.slides[activeIndex] || settings.slides[0];
+        slide.image = String(reader.result || "");
+        writeSettings(settings);
+        render(settings);
+        note.textContent = "Hero зураг хадгалагдлаа.";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    roomFile.addEventListener("change", () => {
+      const file = roomFile.files && roomFile.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const settings = collectSettings();
+        settings.roomImage = String(reader.result || "");
+        writeSettings(settings);
+        render(settings);
+        note.textContent = "Өрөөний зураг хадгалагдлаа.";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    document.querySelector("[data-reset]").addEventListener("click", () => {
+      try { localStorage.removeItem("nursery-site-settings"); } catch (error) {}
+      activeIndex = 0;
+      render({ ...defaults });
+      note.textContent = "Анхны утга сэргээгдлээ.";
+    });
+
+    document.querySelector("[data-logout]").addEventListener("click", () => {
+      try {
+        localStorage.removeItem("nursery-admin-logged-in");
+        localStorage.removeItem("nursery-logged-in");
+        localStorage.removeItem("nursery-current-account");
+      } catch (error) {}
+      window.location.href = "index.html";
+    });
+
+    clearRequests.addEventListener("click", () => {
+      writeBookingRequests([]);
+      requestNote.textContent = "Бүх хүсэлт цэвэрлэгдлээ.";
+      renderRequests();
+    });
+
+    themeToggle.addEventListener("click", () => {
+      const next = document.body.dataset.theme === "night" ? "day" : "night";
+      document.body.dataset.theme = next;
+      themeToggle.textContent = next === "night" ? "Өдөр" : "Шөнө";
+      try { localStorage.setItem("nursery-theme", next); } catch (error) {}
+    });
+
+    const savedTheme = localStorage.getItem("nursery-theme") || "day";
+    document.body.dataset.theme = savedTheme;
+    themeToggle.textContent = savedTheme === "night" ? "Өдөр" : "Шөнө";
+    render(readSettings());
+    renderRequests();
+    window.addEventListener("storage", (event) => {
+      if (event.key === bookingStorageKey) renderRequests();
+    });
+  </script>
+</body>
+</html>
