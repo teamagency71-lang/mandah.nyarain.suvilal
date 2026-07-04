@@ -1,0 +1,313 @@
+﻿<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Тогоочийн самбар | Мандах Нярайн Сувилал</title>
+  <style>
+    :root { --ink:#22312f; --muted:#66736f; --paper:#fffdf9; --soft:#f5f0e8; --mint:#d9eee6; --teal:#1f6f67; --rose:#d98f85; --gold:#c09a55; --line:rgba(34,49,47,.12); --shadow:0 22px 55px rgba(34,49,47,.14); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); line-height:1.6; }
+    body[data-theme="night"] { --ink:#edf6f2; --muted:#b7c8c2; --paper:#101918; --soft:#172422; --mint:#213d36; --teal:#7bd1c4; --rose:#eea49b; --gold:#e0bf73; --line:rgba(237,246,242,.16); --shadow:0 24px 62px rgba(0,0,0,.36); }
+    a { color:inherit; text-decoration:none; }
+    button,input,textarea { font:inherit; }
+    .topbar { position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px clamp(16px,4vw,54px); border-bottom:1px solid var(--line); background:rgba(255,253,249,.94); backdrop-filter:blur(14px); }
+    body[data-theme="night"] .topbar { background:rgba(16,25,24,.94); }
+    .brand { display:inline-flex; align-items:center; gap:12px; }
+    .brand-mark { display:grid; width:42px; height:42px; place-items:center; overflow:hidden; border:1px solid var(--line); border-radius:50%; background:#fff; box-shadow:0 10px 24px rgba(34,49,47,.14); font-weight:900; }
+    .brand-mark img { width:100%; height:100%; object-fit:cover; }
+    .brand strong,.brand small { display:block; line-height:1.1; }
+    .brand small { color:var(--muted); }
+    .actions { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:10px; }
+    .button { display:inline-flex; min-height:42px; align-items:center; justify-content:center; border:1px solid var(--line); border-radius:999px; background:#fff; color:var(--ink); padding:0 14px; font-weight:850; cursor:pointer; }
+    .button-primary { background:var(--teal); color:#fff; border-color:transparent; }
+    body[data-theme="night"] .button { background:#172422; }
+    body[data-theme="night"] .button-primary { color:#071412; }
+    .page { width:min(1120px,calc(100% - 32px)); margin:0 auto; padding:clamp(36px,6vw,72px) 0; }
+    .title { display:grid; gap:12px; margin-bottom:28px; }
+    .eyebrow { margin:0; color:var(--gold); font-size:13px; font-weight:850; letter-spacing:.08em; text-transform:uppercase; }
+    h1 { margin:0; font-size:clamp(34px,5vw,58px); line-height:1.04; letter-spacing:0; }
+    .lead { max-width:760px; margin:0; color:var(--muted); font-size:18px; }
+    .layout { display:grid; grid-template-columns:minmax(280px,.75fr) minmax(0,1.25fr); gap:18px; align-items:start; }
+    .panel { border:1px solid var(--line); border-radius:8px; background:#fff; box-shadow:var(--shadow); padding:clamp(22px,4vw,34px); }
+    body[data-theme="night"] .panel { background:#172422; }
+    .account-card { display:grid; gap:8px; background:var(--mint); color:var(--teal); font-weight:850; }
+    .account-card strong { font-size:22px; line-height:1.16; }
+    .menu-preview { display:grid; gap:12px; margin-top:18px; }
+    .menu-preview article { border:1px solid var(--line); border-radius:8px; background:var(--paper); padding:14px; }
+    .menu-preview h3 { margin:0 0 4px; font-size:16px; }
+    .menu-preview p { margin:0; color:var(--muted); overflow-wrap:anywhere; white-space:pre-wrap; }
+    .photo-panel { margin-top:18px; }
+    .photo-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px; }
+    .photo-head h2 { margin:0; font-size:30px; line-height:1.1; }
+    .photo-head p { margin:6px 0 0; color:var(--muted); }
+    .photo-form { display:grid; gap:16px; margin-bottom:18px; }
+    .food-photo-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; }
+    .food-photo-card { overflow:hidden; border:1px solid var(--line); border-radius:8px; background:var(--paper); }
+    .food-photo-card img { display:block; width:100%; aspect-ratio:4/3; object-fit:cover; background:var(--soft); }
+    .food-photo-body { display:grid; gap:8px; padding:14px; }
+    .food-photo-body h3 { margin:0; font-size:17px; line-height:1.2; }
+    .food-photo-body p { margin:0; color:var(--muted); overflow-wrap:anywhere; white-space:pre-wrap; }
+    .food-photo-empty { margin:0; border:1px dashed var(--line); border-radius:8px; color:var(--muted); padding:18px; text-align:center; }
+    .form { display:grid; gap:16px; }
+    .field-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    label { display:grid; gap:8px; font-weight:750; }
+    input,textarea { width:100%; border:1px solid var(--line); border-radius:8px; background:var(--paper); color:var(--ink); padding:13px 14px; }
+    textarea { resize:vertical; min-height:92px; }
+    .note { min-height:24px; margin:0; color:var(--teal); font-weight:850; }
+    @media (max-width:860px) { .layout,.field-grid { grid-template-columns:1fr; } .topbar { align-items:flex-start; } }
+    @media (max-width:520px) { .brand span:last-child { display:none; } .button { min-height:40px; padding:0 11px; font-size:13px; } }
+    @media (max-width:720px) {
+      .topbar { display:grid; grid-template-columns:1fr; gap:10px; padding:12px; }
+      .brand { min-width:0; width:100%; gap:10px; }
+      .brand-mark { width:38px; height:38px; flex:0 0 auto; font-size:13px; }
+      .brand span:last-child { display:block; }
+      .brand strong { font-size:15px; }
+      .brand small { font-size:12px; }
+      .actions { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); width:100%; gap:8px; }
+      .button { width:100%; min-width:0; min-height:40px; padding:0 10px; font-size:13px; }
+      .page { width:calc(100% - 24px); padding:28px 0; }
+      h1 { font-size:clamp(30px,10vw,40px); }
+      .panel { padding:18px; }
+      .photo-head { display:grid; grid-template-columns:1fr; }
+      .food-photo-list { grid-template-columns:1fr; }
+      .food-photo-body { padding:12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark"><img src="assets/mandah-mark.png" alt="" aria-hidden="true" /></span><span><strong>Тогоочийн account</strong><small>хоолны цэс</small></span></a>
+    <div class="actions"><button class="button" type="button" data-theme-toggle>Шөнө</button><a class="button" href="index.html">Нүүр</a><button class="button button-primary" type="button" data-logout>Гарах</button></div>
+  </header>
+
+  <main class="page">
+    <section class="title">
+      <p class="eyebrow">Тогоочийн самбар</p>
+      <h1>Өдрийн хоолны цэс</h1>
+      <p class="lead">Ээжүүдийн өдөр тутмын хоолны төлөвлөгөөг энд хадгалж, шаардлагатай үед шинэчилнэ.</p>
+    </section>
+
+    <section class="layout">
+      <aside class="panel account-card">
+        <span>Тогоочийн account</span>
+        <strong>cook@mandah.mn</strong>
+        <span>Нууц үг: cook123</span>
+      </aside>
+
+      <section class="panel">
+        <form class="form" data-menu-form>
+          <div class="field-grid">
+            <label>Өглөөний хоол<textarea name="breakfast" rows="3" placeholder="Жишээ: Сүүтэй овъёос, жимс, бүлээн цай"></textarea></label>
+            <label>Өдрийн хоол<textarea name="lunch" rows="3" placeholder="Жишээ: Ногоотой шөл, агшаасан будаа, салат"></textarea></label>
+          </div>
+          <div class="field-grid">
+            <label>Оройн хоол<textarea name="dinner" rows="3" placeholder="Жишээ: Тахианы махтай зутан, ногооны хачир"></textarea></label>
+            <label>Зууш<textarea name="snack" rows="3" placeholder="Жишээ: Тараг, самар, жимс"></textarea></label>
+          </div>
+          <label>Тэмдэглэл<textarea name="note" rows="3" placeholder="Харшил, давс багатай, тусгай хүсэлт гэх мэт"></textarea></label>
+          <button class="button button-primary" type="submit">Цэс хадгалах</button>
+          <p class="note" data-note></p>
+        </form>
+
+        <div class="menu-preview" data-menu-preview aria-live="polite"></div>
+      </section>
+    </section>
+
+    <section class="panel photo-panel">
+      <div class="photo-head">
+        <div>
+          <p class="eyebrow">Зураг</p>
+          <h2>Хоолны зурагнууд</h2>
+          <p>Хоолны зураг оруулаад жагсаалтад хадгална.</p>
+        </div>
+      </div>
+      <form class="photo-form" data-photo-form>
+        <div class="field-grid">
+          <label>Зураг сонгох<input type="file" name="image" accept="image/*" multiple required /></label>
+          <label>Хоолны нэр<input type="text" name="title" placeholder="Жишээ: Өдрийн шөл" /></label>
+        </div>
+        <label>Тайлбар<textarea name="description" rows="3" placeholder="Орц, өдрийн хоол эсвэл тусгай тэмдэглэл"></textarea></label>
+        <button class="button button-primary" type="submit">Зураг хадгалах</button>
+        <p class="note" data-photo-note></p>
+      </form>
+      <div class="food-photo-list" data-photo-list aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script>
+    const menuKey = "nursery-cook-menu";
+    const photoKey = "nursery-cook-photos";
+    const form = document.querySelector("[data-menu-form]");
+    const photoForm = document.querySelector("[data-photo-form]");
+    const photoList = document.querySelector("[data-photo-list]");
+    const photoNote = document.querySelector("[data-photo-note]");
+    const preview = document.querySelector("[data-menu-preview]");
+    const note = document.querySelector("[data-note]");
+    const themeToggle = document.querySelector("[data-theme-toggle]");
+    const labels = { breakfast:"Өглөөний хоол", lunch:"Өдрийн хоол", dinner:"Оройн хоол", snack:"Зууш", note:"Тэмдэглэл" };
+    const defaults = {
+      breakfast: "Сүүтэй овъёос, жимс, бүлээн цай",
+      lunch: "Ногоотой шөл, агшаасан будаа, салат",
+      dinner: "Тахианы махтай зутан, ногооны хачир",
+      snack: "Тараг, самар, жимс",
+      note: "Давс, тосыг хөнгөн тохируулна."
+    };
+
+    const readMenu = () => {
+      try { return { ...defaults, ...JSON.parse(localStorage.getItem(menuKey) || "{}") }; }
+      catch (error) { return { ...defaults }; }
+    };
+
+    const writeMenu = (data) => {
+      try { localStorage.setItem(menuKey, JSON.stringify(data)); }
+      catch (error) {}
+    };
+
+    const readPhotos = () => {
+      try {
+        const photos = JSON.parse(localStorage.getItem(photoKey) || "[]");
+        return Array.isArray(photos) ? photos : [];
+      } catch (error) {
+        return [];
+      }
+    };
+
+    const writePhotos = (photos) => {
+      try {
+        localStorage.setItem(photoKey, JSON.stringify(photos));
+        return true;
+      } catch (error) {
+        return false;
+      }
+    };
+
+    const readFileAsDataUrl = (file) => new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result || ""));
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
+    const render = (data) => {
+      Object.keys(labels).forEach((key) => { form[key].value = data[key] || ""; });
+      preview.innerHTML = "";
+      Object.entries(labels).forEach(([key, label]) => {
+        const item = document.createElement("article");
+        const title = document.createElement("h3");
+        const body = document.createElement("p");
+        title.textContent = label;
+        body.textContent = data[key] || "Оруулаагүй";
+        item.append(title, body);
+        preview.appendChild(item);
+      });
+    };
+
+    const renderPhotos = () => {
+      const photos = readPhotos();
+      photoList.innerHTML = "";
+
+      if (!photos.length) {
+        const empty = document.createElement("p");
+        empty.className = "food-photo-empty";
+        empty.textContent = "Одоогоор зураг хадгалаагүй байна.";
+        photoList.appendChild(empty);
+        return;
+      }
+
+      photos.forEach((photo) => {
+        const card = document.createElement("article");
+        card.className = "food-photo-card";
+
+        const image = document.createElement("img");
+        image.src = photo.image;
+        image.alt = photo.title || "Хоолны зураг";
+
+        const body = document.createElement("div");
+        body.className = "food-photo-body";
+
+        const title = document.createElement("h3");
+        title.textContent = photo.title || "Нэргүй хоол";
+
+        const description = document.createElement("p");
+        description.textContent = photo.description || "Тайлбаргүй";
+
+        const remove = document.createElement("button");
+        remove.className = "button";
+        remove.type = "button";
+        remove.textContent = "Устгах";
+        remove.addEventListener("click", () => {
+          const saved = writePhotos(readPhotos().filter((item) => item.id !== photo.id));
+          photoNote.textContent = saved ? "Зураг устгагдлаа." : "Зураг устгахад алдаа гарлаа.";
+          renderPhotos();
+        });
+
+        body.append(title, description, remove);
+        card.append(image, body);
+        photoList.appendChild(card);
+      });
+    };
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = Object.fromEntries(Object.keys(labels).map((key) => [key, form[key].value.trim()]));
+      writeMenu(data);
+      render(data);
+      note.textContent = "Хоолны цэс хадгалагдлаа.";
+    });
+
+    photoForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const files = Array.from(photoForm.elements.image.files || []);
+      if (!files.length) return;
+
+      const title = photoForm.elements.title.value.trim();
+      const description = photoForm.elements.description.value.trim();
+      const existing = readPhotos();
+      const added = [];
+
+      for (const [index, file] of files.entries()) {
+        const image = await readFileAsDataUrl(file);
+        added.push({
+          id: String(Date.now()) + "-" + index,
+          title: files.length > 1 && title ? `${title} ${index + 1}` : title,
+          description,
+          image,
+          createdAt: new Date().toISOString()
+        });
+      }
+
+      const saved = writePhotos([...added, ...existing]);
+      if (!saved) {
+        photoNote.textContent = "Зураг хадгалах зай хүрэлцэхгүй байна. Жижиг хэмжээтэй зураг оруулна уу.";
+        return;
+      }
+      photoForm.reset();
+      photoNote.textContent = `${added.length} зураг хадгалагдлаа.`;
+      renderPhotos();
+    });
+
+    themeToggle.addEventListener("click", () => {
+      const next = document.body.dataset.theme === "night" ? "day" : "night";
+      document.body.dataset.theme = next;
+      themeToggle.textContent = next === "night" ? "Өдөр" : "Шөнө";
+      try { localStorage.setItem("nursery-theme", next); } catch (error) {}
+    });
+
+    document.querySelector("[data-logout]").addEventListener("click", () => {
+      try {
+        localStorage.removeItem("nursery-cook-logged-in");
+        localStorage.removeItem("nursery-logged-in");
+        localStorage.removeItem("nursery-current-account");
+      } catch (error) {}
+      window.location.href = "index.html";
+    });
+
+    const savedTheme = localStorage.getItem("nursery-theme") || "day";
+    document.body.dataset.theme = savedTheme;
+    themeToggle.textContent = savedTheme === "night" ? "Өдөр" : "Шөнө";
+    render(readMenu());
+    renderPhotos();
+  </script>
+</body>
+</html>
